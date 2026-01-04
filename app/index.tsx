@@ -6,11 +6,12 @@ import CareerSection from "@/components/intro/career/career-section";
 import Navbar from "@/components/navigation/navbar";
 import Skills from "@/components/skills";
 import Lenis from "@studio-freight/lenis";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import { useSpring } from "framer-motion";
 import Intro from "@/components/intro/intro-screen";
+import { opacity, perspective, slide } from "./animations";
 
 export const ScrollProgress = () => {
   const { scrollYProgress } = useScroll();
@@ -37,6 +38,15 @@ export const ScrollProgress = () => {
   return null;
 };
 
+const anim = (variants: Variants) => {
+  return {
+    initial: "initial",
+    animate: "enter",
+    exit: "exit",
+    variants,
+  };
+};
+
 const Index = () => {
   const [showIntro, setShowIntro] = useState(false);
 
@@ -56,7 +66,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-black">
       <AnimatePresence>
         {showIntro && <Intro onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>
@@ -73,7 +83,7 @@ const Index = () => {
           <CareerSection />
           <Skills />
           {/* <CareerSection />
-          <CareerSection /> */}
+    <CareerSection /> */}
         </>
       )}
     </div>

@@ -2,12 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { smoothScrollTo } from "./smooth-scroll";
-
-/* ============================= */
-/* Main Component                */
-/* ============================= */
 
 const Navbar = () => {
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
@@ -15,6 +11,7 @@ const Navbar = () => {
   const links = [
     { id: "about", label: "About" },
     { id: "career", label: "Career" },
+    { id: "skills", label: "Skills" },
     { id: "projects", label: "Projects" },
   ];
 
@@ -31,13 +28,12 @@ const Navbar = () => {
           /* Mobile: Wide & Spread out */
           w-[95%] max-w-md justify-between gap-2 px-4
           /* Desktop: Compact & Centered */
-          md:w-auto md:justify-center md:gap-6 md:px-6 
+          md:max-w-2xl md:w-auto md:justify-center md:gap-6 md:px-6 
           
           py-3 rounded-full border border-white/10 bg-zinc-950/50 
           backdrop-blur-xl shadow-2xl shadow-black/50
         "
       >
-        {/* Logo / Signature */}
         <Link
           href="/"
           onClick={(e) => {
@@ -56,10 +52,8 @@ const Navbar = () => {
           Jagajith
         </Link>
 
-        {/* Separator - Hidden on very small screens if needed, or kept thin */}
         <div className="h-4 w-px bg-white/10 shrink-0" />
 
-        {/* Navigation Links */}
         <ul className="flex items-center gap-1 md:gap-2 font-aoboshi">
           {links.map((link) => (
             <li key={link.id}>
@@ -77,7 +71,6 @@ const Navbar = () => {
                   font-medium text-zinc-400 transition-colors hover:text-white cursor-pointer
                 "
               >
-                {/* The Floating Pill Background */}
                 {hoveredTab === link.id && (
                   <motion.div
                     layoutId="nav-pill"
@@ -85,8 +78,6 @@ const Navbar = () => {
                     className="absolute inset-0 -z-10 rounded-full bg-white/10"
                   />
                 )}
-
-                {/* Text */}
                 <span className="relative z-10">{link.label}</span>
               </button>
             </li>

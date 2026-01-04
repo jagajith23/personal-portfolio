@@ -1,304 +1,6 @@
-// "use client";
-
-// import {
-//   motion,
-//   useInView,
-//   useMotionValueEvent,
-//   useScroll,
-//   useSpring,
-//   useTransform,
-// } from "framer-motion";
-// import Image from "next/image";
-// import { useEffect, useRef, useState } from "react";
-
-// const HIGHLIGHT_WORDS = [
-//   "Python",
-//   "RabbitMQ",
-//   "Celery Beat",
-//   "Celery",
-//   "Ember js",
-//   "JavaScript",
-//   "TypeScript",
-//   "Next js",
-//   "PostgreSQL",
-//   "WebSockets",
-//   "Azure Service Bus",
-//   "C#",
-//   ".NET",
-//   "Entity Framework Core",
-//   "CLEAN",
-//   "MongoDB",
-// ];
-
-// const highlightTech = (text: string, isActive: boolean) => {
-//   const regex = new RegExp(`(${HIGHLIGHT_WORDS.join("|")})`, "g");
-//   const parts = text.split(regex);
-
-//   return parts.map((part, i) => {
-//     const isHighlight = HIGHLIGHT_WORDS.includes(part);
-
-//     if (!isHighlight) return <span key={i}>{part}</span>;
-
-//     return (
-//       <motion.span
-//         key={i}
-//         initial={{ opacity: 0.4, color: "#9ca3af" }}
-//         animate={
-//           isActive
-//             ? {
-//                 opacity: 1,
-//                 color: "#ffffff",
-//                 textShadow: "0px 0px 8px rgba(255,255,255,0.35)",
-//               }
-//             : {
-//                 opacity: 0.5,
-//                 color: "#9ca3af",
-//                 textShadow: "none",
-//               }
-//         }
-//         transition={{ duration: 0.3, ease: "easeOut" }}
-//         className="font-medium"
-//       >
-//         {part}
-//       </motion.span>
-//     );
-//   });
-// };
-
-// export const CAREER = [
-//   {
-//     company: "Xome",
-//     role: "Software Development Engineer - I",
-//     period: "Jul 2024 - Now",
-//     bullets: [
-//       "Modernized legacy SFTP polling architecture by implementing Azure Service Bus–based services, transitioning from 15-minute batch retrieval to real-time, event-driven data processing.",
-//       "Developed a responsive, mobile-friendly dashboard and enhanced website performance by optimizing load times and improving Core Web Vitals, including LCP, CLS, INP, and FID.",
-//       "Implemented real-time updates through WebSockets, ensuring timely data reflection on the dashboard.",
-//       "Worked with Python, RabbitMQ, Celery, Celery Beat, Ember js, JavaScript, TypeScript, Next js, PostgreSQL.",
-//     ],
-//     card: {
-//       visual: "/xome-logo-white.webp",
-//       color: "bg-white",
-//     },
-//   },
-//   {
-//     company: "Xome",
-//     role: "Software Engineer Intern",
-//     period: "Jan 2024 — Jun 2024",
-//     bullets: [
-//       "Revised and optimized existing MongoDB schema to improve data structure and query performance.",
-//       "Added new features to the application, including CRUD operations, to enhance functionality and user experience.",
-//       "Modernized legacy APIs, implementing CLEAN architecture to enhance performance.",
-//       "Converted stored procedures with business logic to Entity Framework Core using the Code First approach, optimizing data access and CRUD operations.",
-//       "Worked with C#, .NET, and Entity Framework Core.",
-//     ],
-//     card: {
-//       visual: "/xome-logo.png",
-//       color: "bg-[#fa5b37]",
-//     },
-//   },
-// ];
-
-// const CareerSection = () => {
-//   const [idx, setIdx] = useState(0);
-//   const leftRef = useRef<HTMLDivElement>(null);
-//   const cardRef = useRef<HTMLDivElement>(null);
-
-//   const [dist, setDist] = useState(200);
-
-//   const { scrollYProgress } = useScroll({
-//     target: leftRef,
-//     offset: ["start 40%", "end center"],
-//   });
-
-//   const progressToIndex = (progress: number, length: number) =>
-//     Math.min(Math.floor(progress * length), length - 1);
-
-//   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-//     const nextIdx = progressToIndex(latest, CAREER.length);
-//     setIdx((prev) => (prev === nextIdx ? prev : nextIdx));
-//   });
-
-//   useEffect(() => {
-//     const updateDist = () => {
-//       if (!leftRef.current || !cardRef.current) return;
-
-//       const leftHeight = leftRef.current.scrollHeight;
-//       const cardHeight = (cardRef.current.clientHeight * 3) / 4;
-//       const bottomPadding = 0;
-
-//       setDist(Math.max(leftHeight - cardHeight - bottomPadding, 0));
-//     };
-
-//     updateDist();
-//     window.addEventListener("resize", updateDist);
-//     return () => window.removeEventListener("resize", updateDist);
-//   }, [cardRef.current, leftRef.current]);
-
-//   const smoothProgress = useSpring(scrollYProgress, {
-//     stiffness: 80,
-//     damping: 10,
-//     mass: 0.8,
-//   });
-
-//   const headingY = useSpring(useTransform(scrollYProgress, [0, 1], [150, 0]), {
-//     stiffness: 100,
-//     damping: 20,
-//   });
-
-//   const leftY = useSpring(useTransform(scrollYProgress, [0, 1], [250, 0]), {
-//     stiffness: 100,
-//     damping: 20,
-//   });
-
-//   const y = useTransform(smoothProgress, [0, 1], [0, dist]);
-
-//   return (
-//     <section
-//       className="flex flex-col items-center font-aoboshi mx-auto pt-20 md:py-20 gap-10 bg-black"
-//       id="career"
-//     >
-//       <motion.h1
-//         className="text-3xl text-neutral-300"
-//         style={{ y: headingY }}
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         transition={{ duration: 3, ease: "easeInOut" }}
-//       >
-//         Career
-//       </motion.h1>
-//       <motion.div
-//         className="flex flex-col py-10 px-10"
-//         style={{ y: leftY }}
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         transition={{ duration: 1, ease: "easeInOut" }}
-//       >
-//         <h2 className="text-4xl md:text-6xl font-black leading-none text-neutral-100">
-//           Let's dive in
-//         </h2>
-//         <div className="grid grid-cols-1 md:grid-cols-2 py-16 gap-8 relative">
-//           <div className="left flex flex-col gap-16" ref={leftRef}>
-//             {CAREER.map((props, i) => (
-//               <CareerItem {...props} key={i} isActive={idx === i} />
-//             ))}
-//           </div>
-//           <motion.div
-//             className="right absolute top-0 left-[55%] w-[50%] hidden md:block"
-//             style={{ y }}
-//           >
-//             <CareerCard
-//               ref={cardRef}
-//               card={CAREER[idx].card}
-//               company={CAREER[idx].company}
-//             />
-//           </motion.div>
-//         </div>
-//       </motion.div>
-//     </section>
-//   );
-// };
-
-// interface CareerItemProps {
-//   company: string;
-//   role: string;
-//   period: string;
-//   bullets: string[];
-//   card: {
-//     visual: string;
-//     color: string;
-//   };
-//   isActive: boolean;
-// }
-
-// const CareerItem = ({
-//   company,
-//   role,
-//   period,
-//   bullets,
-//   card,
-//   isActive,
-// }: CareerItemProps) => {
-//   const ref = useRef(null);
-//   const isInView = useInView(ref, {
-//     once: true,
-//     margin: "-80px",
-//   });
-
-//   return (
-//     <div className="flex flex-col gap-8 w-full h-full">
-//       <motion.div
-//         ref={ref}
-//         initial={{ opacity: 0 }}
-//         animate={isInView ? { opacity: 1 } : {}}
-//         transition={{ duration: 0.6, ease: "easeOut" }}
-//         className={`max-w-xl md:pl-4 md:border-l-2 transition-transform duration-300 ${
-//           isActive
-//             ? "md:opacity-100 md:scale-[1.02] md:border-neutral-300"
-//             : "md:opacity-50 md:border-transparent"
-//         }`}
-//       >
-//         <h3 className="text-2xl md:text-3xl font-semibold text-gray-100">
-//           {company}
-//         </h3>
-//         <div className="mt-1 text-sm text-gray-300">{role}</div>
-//         <div className="mb-3 text-xs text-gray-400">{period}</div>
-//         <ul className="space-y-2 text-sm text-gray-300">
-//           {bullets.map((b, i) => (
-//             <li key={i}>• {highlightTech(b, isActive)}</li>
-//           ))}
-//         </ul>
-//       </motion.div>
-
-//       <div className="w-full md:hidden">
-//         <CareerCard card={card} company={company} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// interface CareerCardProps {
-//   company: string;
-//   card: {
-//     visual: string;
-//     color: string;
-//   };
-// }
-
-// import { forwardRef } from "react";
-
-// interface CareerCardProps {
-//   company: string;
-//   card: {
-//     visual: string;
-//     color: string;
-//   };
-// }
-
-// const CareerCard = forwardRef<HTMLDivElement, CareerCardProps>(
-//   ({ company, card }, ref) => {
-//     return (
-//       <div
-//         ref={ref}
-//         className={`flex justify-center w-full rounded-xl ${card.color} p-8 items-center min-h-150`}
-//       >
-//         <Image
-//           src={card.visual}
-//           alt={`${company} logo`}
-//           width={300}
-//           height={300}
-//         />
-//       </div>
-//     );
-//   }
-// );
-
-// CareerCard.displayName = "CareerCard";
-
-// export default CareerSection;
-
 "use client";
 
+import { forwardRef } from "react";
 import {
   AnimatePresence,
   motion,
@@ -310,7 +12,34 @@ import {
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-// --- Constants ---
+interface CareerCardProps {
+  company: string;
+  card: {
+    visual: string;
+    bg: string;
+    accent: string;
+  };
+}
+
+const CareerCard = forwardRef<HTMLDivElement, CareerCardProps>(
+  ({ company, card }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={`flex justify-center w-full rounded-xl ${card.bg} p-8 items-center min-h-150`}
+      >
+        <Image
+          src={card.visual}
+          alt={`${company} logo`}
+          width={300}
+          height={300}
+        />
+      </div>
+    );
+  }
+);
+
+CareerCard.displayName = "CareerCard";
 
 const HIGHLIGHT_WORDS = [
   "Python",
@@ -369,8 +98,6 @@ export const CAREER = [
   },
 ];
 
-// --- Sub-Components ---
-
 const TechHighlight = ({
   text,
   isActive,
@@ -403,67 +130,67 @@ const TechHighlight = ({
   );
 };
 
-const CareerCard = ({ item }: { item: (typeof CAREER)[0] }) => {
-  return (
-    <div className="w-full h-full flex flex-col items-center justify-center relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/80 backdrop-blur-xl p-8 shadow-2xl font-aoboshi">
-      {/* 1. Background Gradient Animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-            className={`absolute inset-0 ${item.card.accent} opacity-20 blur-3xl`}
-          />
-        </AnimatePresence>
-      </div>
+// const CareerCard = ({ item }: { item: (typeof CAREER)[0] }) => {
+//   return (
+//     <div className="w-full h-full flex flex-col items-center justify-center relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/80 backdrop-blur-xl p-8 shadow-2xl font-aoboshi">
+//       {/* 1. Background Gradient Animation */}
+//       <div className="absolute inset-0 overflow-hidden">
+//         <AnimatePresence mode="popLayout">
+//           <motion.div
+//             key={item.id}
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ opacity: 0 }}
+//             transition={{ duration: 0.6 }}
+//             className={`absolute inset-0 ${item.card.accent} opacity-20 blur-3xl`}
+//           />
+//         </AnimatePresence>
+//       </div>
 
-      {/* 2. Logo Container Animation */}
-      <div className="relative z-10 mb-6">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 10, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.9 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className={`p-6 rounded-2xl ${item.card.bg} shadow-lg`}
-          >
-            <div className="relative w-32 h-32 md:w-48 md:h-48 flex items-center justify-center">
-              <Image
-                src={item.card.visual}
-                alt={item.company}
-                width={400}
-                height={400}
-                className="object-contain"
-              />
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+//       {/* 2. Logo Container Animation */}
+//       <div className="relative z-10 mb-6">
+//         <AnimatePresence mode="wait">
+//           <motion.div
+//             key={item.id}
+//             initial={{ opacity: 0, y: 10, scale: 0.9 }}
+//             animate={{ opacity: 1, y: 0, scale: 1 }}
+//             exit={{ opacity: 0, y: -10, scale: 0.9 }}
+//             transition={{ duration: 0.4, ease: "easeInOut" }}
+//             className={`p-6 rounded-2xl ${item.card.bg} shadow-lg`}
+//           >
+//             <div className="relative w-32 h-32 md:w-48 md:h-48 flex items-center justify-center">
+//               <Image
+//                 src={item.card.visual}
+//                 alt={item.company}
+//                 width={400}
+//                 height={400}
+//                 className="object-contain"
+//               />
+//             </div>
+//           </motion.div>
+//         </AnimatePresence>
+//       </div>
 
-      {/* 3. Text Content Animation */}
-      <div className="relative z-10 text-center h-20">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h3 className="text-xl font-bold text-white tracking-tight">
-              {item.company}
-            </h3>
-            <p className="text-sm text-zinc-400 mt-1">{item.period}</p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-};
+//       {/* 3. Text Content Animation */}
+//       <div className="relative z-10 text-center h-20">
+//         <AnimatePresence mode="wait">
+//           <motion.div
+//             key={item.id}
+//             initial={{ opacity: 0, y: 10 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             exit={{ opacity: 0, y: -10 }}
+//             transition={{ duration: 0.3 }}
+//           >
+//             <h3 className="text-xl font-bold text-white tracking-tight">
+//               {item.company}
+//             </h3>
+//             <p className="text-sm text-zinc-400 mt-1">{item.period}</p>
+//           </motion.div>
+//         </AnimatePresence>
+//       </div>
+//     </div>
+//   );
+// };
 
 // --- Main Section ---
 
@@ -544,7 +271,7 @@ const CareerRedesign = () => {
               style={{ y }}
               className="w-full aspect-square max-w-125"
             >
-              <CareerCard item={activeItem} />
+              <CareerCard card={activeItem.card} company={activeItem.company} />
             </motion.div>
           </div>
         </div>
@@ -565,10 +292,6 @@ const TimelineItem = ({
   isActive: boolean;
 }) => {
   const ref = useRef(null);
-
-  // FIXED: Changed margin to "-50%...".
-  // This creates a 1px trigger line in the exact center of the viewport.
-  // It ensures only one item can be "in view" at a time, eliminating overlap bugs when scrolling up.
   const isInView = useInView(ref, { margin: "-50% 0px -50% 0px" });
 
   useEffect(() => {
@@ -598,7 +321,7 @@ const TimelineItem = ({
       >
         <div>
           <h3 className="text-2xl font-bold text-white">{data.role}</h3>
-          <div className="flex items-center gap-3 mt-2 text-zinc-400 font-mono text-sm">
+          <div className="flex items-center gap-3 mt-2 text-zinc-400 text-sm">
             <span>{data.company}</span>
             <span className="w-1 h-1 bg-zinc-600 rounded-full" />
             <span>{data.period}</span>
@@ -617,7 +340,7 @@ const TimelineItem = ({
         </ul>
 
         {/* Mobile-only Card */}
-        <div className="lg:hidden mt-8">
+        {/* <div className="lg:hidden mt-8">
           <div className="rounded-xl bg-zinc-900 border border-zinc-800 p-6 flex items-center justify-center gap-4">
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black font-bold text-xs">
               <Image
@@ -629,7 +352,7 @@ const TimelineItem = ({
             </div>
             <span className="font-bold text-white">{data.company}</span>
           </div>
-        </div>
+        </div> */}
       </motion.div>
     </div>
   );

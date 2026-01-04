@@ -7,7 +7,7 @@ export const smoothScrollTo = (targetId: string) => {
   if (!element) return;
 
   // Offset ensures the section title isn't hidden behind the floating nav
-  const offset = 100;
+  const offset = 0;
   const bodyRect = document.body.getBoundingClientRect().top;
   const elementRect = element.getBoundingClientRect().top;
   const elementPosition = elementRect - bodyRect;
