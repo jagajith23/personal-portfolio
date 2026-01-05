@@ -92,7 +92,7 @@ const About = () => {
           transition={{ duration: 0.8 }}
           className="mb-12 space-y-4"
         >
-          <h2 className="text-3xl  font-bold bg-clip-text text-transparent bg-linear-to-b from-zinc-100 via-zinc-300 to-zinc-600 font-wind-song">
+          <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-b from-zinc-100 via-zinc-300 to-zinc-600 font-wind-song">
             About
           </h2>
           {/* <h2 className="text-xl text-zinc-200 font-wind-song">Profile</h2> */}
