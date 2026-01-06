@@ -730,10 +730,10 @@ const CareerCard = React.memo(
         <div className="absolute bottom-0 -left-10 -right-10 h-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600" />
 
         {/* Vertical Left */}
-        <div className="absolute left-8 -top-10 -bottom-10 w-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600 z-0" />
+        <div className="absolute left-8 -top-5 -bottom-5 md:-top-10 md:-bottom-10 w-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600 z-0" />
 
         {/* Vertical Right */}
-        <div className="absolute right-8 -top-10 -bottom-10 w-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600 z-0" />
+        <div className="absolute right-8 -top-5 -bottom-5 md:-top-10 md:-bottom-10 w-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600 z-0" />
 
         {/* Top Left */}
         <div className="absolute left-8 top-0 -translate-x-1/2 -translate-y-1/2 z-10 bg-black text-neutral-800 transition-colors duration-300 group-hover:text-neutral-500">
@@ -756,27 +756,28 @@ const CareerCard = React.memo(
           <motion.div
             layout="position"
             style={{ x: textX, y: textY }}
-            className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
+            className="flex flex-col md:flex-row justify-between gap-3 md:gap-6 md:items-center"
           >
-            <motion.p
-              layout="position"
-              className="md:col-span-3 text-2xl md:text-3xl font-medium tracking-tight group-hover:text-white transition-colors"
-            >
-              {company}
-            </motion.p>
+            <div className="flex flex-col gap-2 text-2xl md:text-3xl font-medium tracking-tight transition-colors">
+              <motion.p
+                layout="position"
+                className="group-hover:text-white transition-colors"
+              >
+                {company}
+              </motion.p>
+              <motion.p
+                layout="position"
+                className="text-xs md:text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors"
+              >
+                {period}
+              </motion.p>
+            </div>
 
             <motion.p
               layout="position"
-              className="md:col-span-6 text-sm md:text-base text-zinc-300 leading-snug text-center group-hover:text-zinc-100 transition-colors"
+              className="text-sm md:text-base text-zinc-300 leading-snug text-left md:text-right group-hover:text-zinc-100 transition-colors"
             >
               {role}
-            </motion.p>
-
-            <motion.p
-              layout="position"
-              className="md:col-span-3 text-xs md:text-sm text-zinc-400 md:text-right group-hover:text-zinc-300 transition-colors"
-            >
-              {period}
             </motion.p>
           </motion.div>
 
