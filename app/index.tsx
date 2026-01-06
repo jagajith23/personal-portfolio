@@ -66,7 +66,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="w-full bg-black">
+    <div className="w-screen bg-black">
       <AnimatePresence>
         {showIntro && <Intro onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>

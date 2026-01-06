@@ -3,11 +3,18 @@
 import {
   AnimatePresence,
   motion,
+  MotionValue,
   useMotionValue,
   useSpring,
   useTransform,
 } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 // import { forwardRef } from "react";
 // import {
@@ -435,8 +442,31 @@ const HIGHLIGHT_WORDS = [
   "MongoDB",
 ];
 
-const TechHighlight = ({ text }: { text: string }) => {
-  const regex = new RegExp(`(${HIGHLIGHT_WORDS.join("|")})`, "g");
+const PlusIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="white"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M5 12h14" />
+    <path d="M12 5v14" />
+  </svg>
+);
+
+const TechHighlight = React.memo(({ text }: { text: string }) => {
+  const escapeRegex = (str: string) =>
+    str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const regex = new RegExp(
+    `(${HIGHLIGHT_WORDS.map(escapeRegex).join("|")})`,
+    "g"
+  );
+
   const parts = text.split(regex);
 
   return (
@@ -445,7 +475,11 @@ const TechHighlight = ({ text }: { text: string }) => {
         const isHighlight = HIGHLIGHT_WORDS.includes(part);
 
         if (!isHighlight) {
-          return <span key={i}>{part}</span>;
+          return (
+            <span key={i} className="text-zinc-200 font-medium tracking-wide">
+              {part}
+            </span>
+          );
         }
 
         return (
@@ -470,7 +504,7 @@ const TechHighlight = ({ text }: { text: string }) => {
       })}
     </span>
   );
-};
+});
 
 const HoverImage = ({
   active,
@@ -480,8 +514,8 @@ const HoverImage = ({
 }: {
   active: boolean;
   currentImage: string | null;
-  mouseX: any;
-  mouseY: any;
+  mouseX: MotionValue<number>;
+  mouseY: MotionValue<number>;
 }) => {
   return (
     <motion.div
@@ -525,14 +559,16 @@ const HoverImage = ({
 
 const Career = () => {
   const [activeId, setActiveId] = useState<number | null>(1);
-
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
 
-  const activeImages = CAREER.find((c) => c.id === hoveredCardId)?.images || [];
+  const activeImages = useMemo(
+    () => CAREER.find((c) => c.id === hoveredCardId)?.images || [],
+    [hoveredCardId]
+  );
 
   useEffect(() => {
     if (!hoveredCardId || activeImages.length === 0) return;
@@ -542,16 +578,16 @@ const Career = () => {
     }, 1800);
 
     return () => clearInterval(interval);
-  }, [hoveredCardId, activeImages.length]);
+  }, [hoveredCardId, activeImages]);
 
   useEffect(() => {
     setCurrentImageIndex(0);
   }, [hoveredCardId]);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
     cursorX.set(e.clientX + 10);
     cursorY.set(e.clientY + 10);
-  };
+  }, []);
 
   return (
     <motion.section
@@ -596,6 +632,7 @@ const Career = () => {
             <CareerCard
               key={item.id}
               {...item}
+              i={item.id}
               isActive={activeId === item.id}
               onClick={() => setActiveId(activeId === item.id ? null : item.id)}
               onHoverStart={() => setHoveredCardId(item.id)}
@@ -609,106 +646,176 @@ const Career = () => {
 };
 
 interface CardProps {
-  company: string;
-  period: string;
-  role: string;
-  bullets: string[];
-  isActive: boolean;
-  onClick: () => void;
-  onHoverStart: () => void;
-  onHoverEnd: () => void;
+  readonly i: number;
+  readonly company: string;
+  readonly period: string;
+  readonly role: string;
+  readonly bullets: readonly string[];
+  readonly isActive: boolean;
+  readonly onClick: () => void;
+  readonly onHoverStart: () => void;
+  readonly onHoverEnd: () => void;
 }
 
-const CareerCard = ({
-  company,
-  period,
-  role,
-  bullets,
-  isActive,
-  onClick,
-  onHoverStart,
-  onHoverEnd,
-}: CardProps) => {
-  const baseX = useMotionValue(0);
-  const X = useMotionValue(0);
+const SPRING_CONFIG = { damping: 50, stiffness: 100, mass: 0.1 };
 
-  const companyX = useSpring(baseX, { stiffness: 150, damping: 18 });
-  const roleX = useSpring(baseX, { stiffness: 120, damping: 20 });
-  const periodX = useSpring(X, { stiffness: 90, damping: 22 });
+const CareerCard = React.memo(
+  ({
+    company,
+    period,
+    role,
+    bullets,
+    isActive,
+    onClick,
+    onHoverStart,
+    onHoverEnd,
+  }: CardProps) => {
+    const ref = useRef<HTMLDivElement>(null);
 
-  const handleMouseEnter = () => {
-    onHoverStart();
-    if (!isActive) {
-      baseX.set(20);
-      X.set(-20);
-    }
-  };
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
 
-  const handleMouseLeave = () => {
-    onHoverEnd();
-    if (!isActive) {
-      baseX.set(0);
-      X.set(0);
-    }
-  };
+    const springX = useSpring(mouseX, SPRING_CONFIG);
+    const springY = useSpring(mouseY, SPRING_CONFIG);
 
-  const handleClick = () => {
-    baseX.set(0);
-    X.set(0);
-    onClick();
-  };
+    const textX = useTransform(springX, (x) => x * 0.15);
+    const textY = useTransform(springY, (y) => y * 0.25);
 
-  return (
-    <motion.div
-      layout
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="w-full border-y border-neutral-900 text-white px-16 py-12 cursor-pointer relative"
-      transition={{ layout: { duration: 0.4, ease: "easeInOut" } }}
-    >
-      <div className="flex justify-between items-center relative z-10">
-        <div className="flex flex-col gap-4">
-          <motion.p
-            className="font-bold text-xl md:text-4xl"
-            style={{ x: companyX }}
-          >
-            {company}
-          </motion.p>
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (isActive || !ref.current) return;
 
-          <motion.p
-            className="font-extralight text-sm md:text-lg text-neutral-200"
-            style={{ x: roleX }}
-          >
-            {role}
-          </motion.p>
+      const { left, top, width, height } = ref.current.getBoundingClientRect();
+      const centerX = left + width / 2;
+      const centerY = top + height / 2;
+
+      const displacementX = (e.clientX - centerX) / 10;
+      const displacementY = (e.clientY - centerY) / 10;
+
+      mouseX.set(displacementX);
+      mouseY.set(displacementY);
+    };
+
+    const handleMouseEnter = () => {
+      onHoverStart();
+    };
+
+    const handleMouseLeave = () => {
+      onHoverEnd();
+      mouseX.set(0);
+      mouseY.set(0);
+    };
+
+    const handleClick = () => {
+      mouseX.set(0);
+      mouseY.set(0);
+      onClick();
+    };
+
+    return (
+      <motion.div
+        ref={ref}
+        layout
+        onClick={handleClick}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        initial={false}
+        style={{ x: springX, y: springY }}
+        className="w-full text-white cursor-pointer relative group"
+      >
+        {/* Horizontal Top */}
+        <div className="absolute top-0 -left-10 -right-10 h-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600" />
+
+        {/* Horizontal Bottom */}
+        <div className="absolute bottom-0 -left-10 -right-10 h-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600" />
+
+        {/* Vertical Left */}
+        <div className="absolute left-8 -top-10 -bottom-10 w-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600 z-0" />
+
+        {/* Vertical Right */}
+        <div className="absolute right-8 -top-10 -bottom-10 w-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600 z-0" />
+
+        {/* Top Left */}
+        <div className="absolute left-8 top-0 -translate-x-1/2 -translate-y-1/2 z-10 bg-black text-neutral-800 transition-colors duration-300 group-hover:text-neutral-500">
+          <PlusIcon className="w-4 h-4" />
+        </div>
+        {/* Top Right */}
+        <div className="absolute right-8 top-0 translate-x-1/2 -translate-y-1/2 z-10 bg-black text-neutral-800 transition-colors duration-300 group-hover:text-neutral-500">
+          <PlusIcon className="w-4 h-4" />
+        </div>
+        {/* Bottom Left */}
+        <div className="absolute left-8 bottom-0 -translate-x-1/2 translate-y-1/2 z-10 bg-black text-neutral-800 transition-colors duration-300 group-hover:text-neutral-500">
+          <PlusIcon className="w-4 h-4" />
+        </div>
+        {/* Bottom Right */}
+        <div className="absolute right-8 bottom-0 translate-x-1/2 translate-y-1/2 z-10 bg-black text-neutral-800 transition-colors duration-300 group-hover:text-neutral-500">
+          <PlusIcon className="w-4 h-4" />
         </div>
 
-        <motion.p style={{ x: periodX }}>{period}</motion.p>
-      </div>
-
-      <AnimatePresence>
-        {isActive && (
-          <motion.ul
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="mt-8 space-y-3 text-neutral-300 overflow-hidden relative z-10"
+        <div className="px-16 py-12 relative z-10">
+          <motion.div
+            layout="position"
+            style={{ x: textX, y: textY }}
+            className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
           >
-            {bullets.map((bullet, i) => (
-              <li
-                key={`${company}-${i}`}
-                className="list-disc ml-6 text-sm md:text-lg"
-              >
-                <TechHighlight text={bullet} />
-              </li>
-            ))}
-          </motion.ul>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-};
+            <motion.p
+              layout="position"
+              className="md:col-span-3 text-2xl md:text-3xl font-medium tracking-tight group-hover:text-white transition-colors"
+            >
+              {company}
+            </motion.p>
 
+            <motion.p
+              layout="position"
+              className="md:col-span-6 text-sm md:text-base text-zinc-300 leading-snug text-center group-hover:text-zinc-100 transition-colors"
+            >
+              {role}
+            </motion.p>
+
+            <motion.p
+              layout="position"
+              className="md:col-span-3 text-xs md:text-sm text-zinc-400 md:text-right group-hover:text-zinc-300 transition-colors"
+            >
+              {period}
+            </motion.p>
+          </motion.div>
+
+          <AnimatePresence>
+            {isActive && (
+              <motion.div
+                key="content"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                style={{ overflow: "hidden" }}
+              >
+                <div className="pt-8 pb-2 flex flex-col gap-3 text-neutral-300">
+                  {bullets.map((bullet, idx) => (
+                    <motion.div
+                      key={`${company}-${idx}`}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.3,
+                        delay: idx * 0.1,
+                        ease: "easeOut",
+                      }}
+                      className="flex items-start gap-3"
+                    >
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-400" />
+                      <span className="text-sm md:text-base leading-relaxed">
+                        <TechHighlight text={bullet} />
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    );
+  }
+);
 export default Career;

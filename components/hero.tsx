@@ -180,7 +180,7 @@ export default function Hero() {
 
   return (
     <motion.section
-      className="relative h-screen overflow-hidden bg-black w-full"
+      className="relative h-screen w-screen overflow-hidden bg-black"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -209,28 +209,29 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Social Links - Bottom Left */}
+      {/* --- MODIFIED SOCIAL LINKS SECTION --- */}
       <div
-        // variants={buttonVariants}
-        className="absolute bottom-10 left-8 z-50 flex items-center gap-4 md:bottom-16 md:left-16 overflow-hidden"
+        // Changed:
+        // 1. absolute position from bottom-10/left-8 to bottom-8/left-4 for mobile
+        // 2. Added flex-col for mobile (vertical stack) -> flex-row for desktop
+        // 3. Added items-start to align them nicely when vertical
+        className="absolute bottom-8 left-4 z-50 flex flex-col md:flex-row items-center gap-4 md:bottom-16 md:left-16 overflow-visible"
       >
         {SOCIAL_LINKS.map((link, idx) => (
           <MagneticSocialLink key={idx} {...link} idx={idx} />
         ))}
       </div>
 
-      {/* Explore Button - Bottom Right */}
       <motion.div
         variants={buttonVariants}
-        className="absolute bottom-10 right-8 z-50 md:bottom-16 md:right-16"
+        // Changed: Reduced margins on mobile (bottom-8 right-4)
+        className="absolute bottom-8 right-4 z-50 md:bottom-16 md:right-16"
       >
         <MagneticButton
           onClick={() => smoothScrollTo("#about")}
           title="Explore"
         />
       </motion.div>
-
-      {/* <VerticalPortrait /> */}
     </motion.section>
   );
 }
@@ -447,7 +448,7 @@ function VerticalPortrait() {
         top-1/2 
         -translate-y-1/2
         h-[70vh]
-        w-[220px]
+        w-55
         overflow-hidden
         pointer-events-none
         hidden
