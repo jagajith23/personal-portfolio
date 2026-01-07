@@ -11,8 +11,8 @@ const Navbar = () => {
   const links = [
     { id: "about", label: "About" },
     { id: "career", label: "Career" },
-    { id: "skills", label: "Skills" },
     { id: "projects", label: "Projects" },
+    { id: "skills", label: "Skills" },
   ];
 
   return (
@@ -68,7 +68,7 @@ const Navbar = () => {
                   /* Desktop: original padding */
                   md:px-4 md:text-sm 
                   
-                  font-medium text-zinc-400 transition-colors hover:text-white cursor-pointer
+                  font-medium text-zinc-400 transition-colors hover:text-white
                 "
               >
                 {hoveredTab === link.id && (

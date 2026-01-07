@@ -180,7 +180,7 @@ export default function Hero() {
 
   return (
     <motion.section
-      className="relative h-screen w-screen overflow-hidden bg-black"
+      className="relative h-screen max-w-7xl w-full mx-auto overflow-hidden bg-black"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -203,20 +203,14 @@ export default function Hero() {
           </motion.div>
 
           <div className="flex flex-col items-center gap-1 md:gap-2">
-            <MaskedReveal text="BUILDING SYSTEMS" />
-            <MaskedReveal text="THAT LASTS" accent />
+            {/* <MaskedReveal text="BUILDING SYSTEMS" />
+            <MaskedReveal text="THAT LASTS" accent /> */}
+            <MaskedReveal text="I DON'T SHIP" />
+            <MaskedReveal text="UNTIL IT'S PERFECT" accent />
           </div>
         </div>
       </motion.div>
-
-      {/* --- MODIFIED SOCIAL LINKS SECTION --- */}
-      <div
-        // Changed:
-        // 1. absolute position from bottom-10/left-8 to bottom-8/left-4 for mobile
-        // 2. Added flex-col for mobile (vertical stack) -> flex-row for desktop
-        // 3. Added items-start to align them nicely when vertical
-        className="absolute bottom-8 left-4 z-50 flex flex-col md:flex-row items-center gap-4 md:bottom-16 md:left-16 overflow-visible"
-      >
+      <div className="absolute bottom-8 left-4 z-50 flex flex-col md:flex-row items-center gap-4 md:bottom-16 md:left-16 overflow-hidden">
         {SOCIAL_LINKS.map((link, idx) => (
           <MagneticSocialLink key={idx} {...link} idx={idx} />
         ))}
@@ -224,7 +218,6 @@ export default function Hero() {
 
       <motion.div
         variants={buttonVariants}
-        // Changed: Reduced margins on mobile (bottom-8 right-4)
         className="absolute bottom-8 right-4 z-50 md:bottom-16 md:right-16"
       >
         <MagneticButton
@@ -299,8 +292,6 @@ function MaskedReveal({
     </h1>
   );
 }
-
-// --- Components ---
 
 function MagneticSocialLink({
   name,
@@ -407,7 +398,7 @@ function MagneticButton({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: xSpring, y: ySpring }}
-      className="cursor-pointer group relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 backdrop-blur-sm transition-colors duration-500 hover:border-white/30 md:h-32 md:w-32"
+      className="group relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 backdrop-blur-sm transition-colors duration-500 hover:border-white/30 md:h-32 md:w-32"
     >
       <div className="absolute inset-0 translate-y-full bg-white transition-transform duration-500 ease-[cubic-bezier(0.87,0,0.13,1)] group-hover:translate-y-0" />
       <motion.div className="relative z-10 flex flex-col items-center gap-1">

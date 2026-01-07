@@ -168,7 +168,7 @@ function SkillItem({
 }) {
   return (
     <div
-      className="flex items-center gap-4 group cursor-default"
+      className="flex items-center gap-4 group"
       style={{ "--hover-color": data.color } as React.CSSProperties}
     >
       <div className="w-8 h-8 md:w-12 md:h-12 text-zinc-500 transition-all duration-300 group-hover:text-(--hover-color) group-hover:scale-110">

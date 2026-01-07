@@ -81,7 +81,7 @@ const About = () => {
         <div
           className="
             absolute inset-0 h-full w-full 
-            bg-[linear-gradient(to_right,#e5e7eb15_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb15_1px,transparent_1px)] bg-size-[24px_24px] 
+            bg-[linear-gradient(to_right,#e5e7eb10_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb10_1px,transparent_1px)] bg-size-[64px_64px] 
             mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"
         />
       </div>
@@ -123,11 +123,11 @@ const About = () => {
             md:grid-cols-4
             lg:grid-cols-5
             gap-6
-            border-t border-zinc-800
             pt-8 mt-20
             text-center
-          "
+            "
         >
+          {/* border-t border-zinc-800 */}
           <StatItem label="Age" value={age.toString()} />
           <StatItem label="Experience" value={`${experience} Years`} />
           <StatItem label="Based In" value="India" />
@@ -162,27 +162,6 @@ const About = () => {
 //   </div>
 // );
 
-// const StatItem = ({
-//   label,
-//   value,
-//   colSpan = "col-span-1",
-// }: {
-//   label: string;
-//   value: string;
-//   colSpan?: string;
-// }) => (
-//   <div
-//     className={`flex flex-col gap-2 pl-4 border-l border-zinc-800 ${colSpan}`}
-//   >
-//     <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
-//       {label}
-//     </span>
-//     <span className="text-2xl md:text-3xl font-semibold text-zinc-100 font-aoboshi tracking-tight">
-//       {value}
-//     </span>
-//   </div>
-// );
-
 const StatItem = ({
   label,
   value,
@@ -196,7 +175,7 @@ const StatItem = ({
     <span className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-linear-to-b from-white to-zinc-500">
       {value}
     </span>
-    <span className="mt-2 text-xs font-medium text-zinc-600 uppercase tracking-widest border-t border-zinc-800 pt-2 px-2">
+    <span className="mt-2 text-xs font-medium text-zinc-600 uppercase border-t border-zinc-800 pt-2 px-2">
       {label}
     </span>
   </div>

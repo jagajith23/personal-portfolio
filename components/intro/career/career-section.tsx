@@ -721,7 +721,7 @@ const CareerCard = React.memo(
         onMouseLeave={handleMouseLeave}
         initial={false}
         style={{ x: springX, y: springY }}
-        className="w-full text-white cursor-pointer relative group"
+        className="w-full text-white relative group pointer-events-auto"
       >
         {/* Horizontal Top */}
         <div className="absolute top-0 -left-10 -right-10 h-px bg-neutral-800 transition-colors duration-300 group-hover:bg-neutral-600" />
@@ -756,7 +756,7 @@ const CareerCard = React.memo(
           <motion.div
             layout="position"
             style={{ x: textX, y: textY }}
-            className="flex flex-col md:flex-row justify-between gap-3 md:gap-6 md:items-center"
+            className="flex flex-col md:flex-row justify-between gap-3 md:gap-6 md:items-center cursor-pointer"
           >
             <div className="flex flex-col gap-2 text-2xl md:text-3xl font-medium tracking-tight transition-colors">
               <motion.p
