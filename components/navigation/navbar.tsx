@@ -41,11 +41,9 @@ const Navbar = () => {
             smoothScrollTo("body");
           }}
           className="
-            /* Mobile: Smaller padding/text */
+            cursor-pointer
             pr-2 pb-1 text-lg 
-            /* Desktop: Original padding/text */
             md:pr-6 md:pl-6 md:text-xl 
-            
             text-zinc-200 transition-colors hover:text-white font-wind-song font-bold tracking-wide
           "
         >
@@ -62,10 +60,8 @@ const Navbar = () => {
                 onMouseEnter={() => setHoveredTab(link.id)}
                 onMouseLeave={() => setHoveredTab(null)}
                 className="
-                  relative 
-                  /* Mobile: reduced padding */
+                  relative cursor-pointer
                   px-2.5 py-1.5 text-xs 
-                  /* Desktop: original padding */
                   md:px-4 md:text-sm 
                   
                   font-medium text-zinc-400 transition-colors hover:text-white

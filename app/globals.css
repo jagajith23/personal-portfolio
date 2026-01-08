@@ -208,17 +208,20 @@ body::-webkit-scrollbar:horizontal {
     @apply bg-background text-foreground;
   }
 
-  @media (pointer: fine) {
+  /* @media (pointer: fine) {
     body {
       cursor: none;
     }
-
-    /* Ensure cursor is hidden on interactive elements too */
     a,
     button,
     input,
     [role="button"] {
       cursor: none;
     }
-  }
+  } */
+}
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
 }

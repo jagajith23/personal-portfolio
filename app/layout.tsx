@@ -92,9 +92,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="w-screen">
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${aoboshiOne.variable} ${windSong.variable} antialiased w-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} ${aoboshiOne.variable} ${windSong.variable} antialiased bg-black`}
       >
         {children}
       </body>

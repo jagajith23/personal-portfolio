@@ -12,7 +12,7 @@ import { useScroll, useMotionValueEvent } from "framer-motion";
 import { useSpring } from "framer-motion";
 import Intro from "@/components/intro/intro-screen";
 import { opacity, perspective, slide } from "./animations";
-import CustomCursor from "@/components/custom-cursor";
+// import CustomCursor from "@/components/custom-cursor";
 import ProjectSection from "@/components/projects";
 
 export const ScrollProgress = () => {
@@ -68,8 +68,8 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="w-screen bg-black cursor-none">
-      <CustomCursor />
+    <div className="w-screen bg-black">
+      {/* <CustomCursor /> */}
       <AnimatePresence>
         {showIntro && <Intro onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>

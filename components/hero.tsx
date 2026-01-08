@@ -11,6 +11,7 @@ import {
 import { smoothScrollTo } from "./navigation/smooth-scroll";
 import { useRef } from "react";
 import { blurInVariants, buttonVariants } from "@/app/animations";
+import MagneticButton from "./magnetic-button";
 
 const SOCIAL_LINKS = [
   {
@@ -203,10 +204,10 @@ export default function Hero() {
           </motion.div>
 
           <div className="flex flex-col items-center gap-1 md:gap-2">
-            {/* <MaskedReveal text="BUILDING SYSTEMS" />
-            <MaskedReveal text="THAT LASTS" accent /> */}
-            <MaskedReveal text="I DON'T SHIP" />
-            <MaskedReveal text="UNTIL IT'S PERFECT" accent />
+            <MaskedReveal text="BUILDING SYSTEMS" />
+            <MaskedReveal text="THAT LASTS" accent />
+            {/* <MaskedReveal text="I DON'T SHIP" />
+            <MaskedReveal text="UNTIL IT'S PERFECT" accent /> */}
           </div>
         </div>
       </motion.div>
@@ -358,69 +359,6 @@ function MagneticSocialLink({
         <path d={path} />
       </svg>
     </motion.a>
-  );
-}
-
-function MagneticButton({
-  onClick,
-  title,
-}: {
-  onClick: () => void;
-  title: string;
-}) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
-  const xSpring = useSpring(x, springConfig);
-  const ySpring = useSpring(y, springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!ref.current) return;
-    const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
-    x.set(middleX * 0.5);
-    y.set(middleY * 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.button
-      ref={ref}
-      onClick={onClick}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: xSpring, y: ySpring }}
-      className="group relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 backdrop-blur-sm transition-colors duration-500 hover:border-white/30 md:h-32 md:w-32"
-    >
-      <div className="absolute inset-0 translate-y-full bg-white transition-transform duration-500 ease-[cubic-bezier(0.87,0,0.13,1)] group-hover:translate-y-0" />
-      <motion.div className="relative z-10 flex flex-col items-center gap-1">
-        <span className="font-aoboshi text-xs tracking-widest text-white transition-colors duration-500 group-hover:text-black md:text-sm">
-          {title}
-        </span>
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          className="stroke-white transition-colors duration-500 group-hover:stroke-black group-hover:rotate-90"
-        >
-          <path
-            d="M7 17L17 7M17 7H7M17 7V17"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </motion.div>
-    </motion.button>
   );
 }
 

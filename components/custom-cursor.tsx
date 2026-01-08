@@ -59,8 +59,8 @@ const CustomCursor = () => {
         translateY: "-50%",
       }}
       animate={{
-        width: isHovered ? 100 : 30,
-        height: isHovered ? 100 : 30,
+        width: isHovered ? 60 : 30,
+        height: isHovered ? 60 : 30,
       }}
       transition={{ type: "tween", ease: "backOut", duration: 0.2 }}
       className="fixed top-0 left-0 z-9999 pointer-events-none rounded-full bg-white mix-blend-difference"
