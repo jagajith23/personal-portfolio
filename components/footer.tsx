@@ -409,9 +409,25 @@ export default function Footer() {
         </div>
 
         {/* --- SECTION 3: MASSIVE BRANDING & COPYRIGHT --- */}
-        <div className="relative mt-10">
+        <div className="relative mt-10 h-[15vh]">
           {/* The Huge Name - Visual Anchor */}
-          <h1 className="-mb-20 text-[15vw] leading-[0.8] font-bold text-zinc-900 select-none text-center tracking-tighter mix-blend-difference pointer-events-none">
+          <h1
+            className="
+                absolute
+                left-1/2
+                -translate-x-1/2
+                -bottom-3/4
+                text-[15vw]
+                leading-[0.8]
+                font-bold
+                text-zinc-900
+                select-none
+                text-center
+                tracking-tighter
+                mix-blend-difference
+                pointer-events-none
+            "
+          >
             JAGAJITH
           </h1>
 

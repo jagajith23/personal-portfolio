@@ -81,7 +81,7 @@ export default function Hero() {
       variants={containerVariants}
     >
       <motion.div
-        className="relative z-10 flex h-full items-center justify-center px-6"
+        className="relative flex h-full items-center justify-center px-6"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="max-w-4xl text-center">
