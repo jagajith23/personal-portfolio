@@ -52,7 +52,7 @@ const Navbar = () => {
 
         <div className="h-4 w-px bg-white/10 shrink-0" />
 
-        <ul className="flex items-center gap-1 md:gap-2 font-aoboshi">
+        <ul className="flex items-center gap-px sm:gap-1 md:gap-2 font-aoboshi">
           {links.map((link) => (
             <li key={link.id}>
               <button

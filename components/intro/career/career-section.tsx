@@ -403,7 +403,7 @@ export const CAREER = [
     id: 2,
     company: "Xome",
     role: "Software Engineer Intern",
-    period: "Jan 2024 — Jun 2024",
+    period: "Jan 2024 - Jun 2024",
     images: [
       "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?q=80&w=600&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop",
@@ -767,9 +767,57 @@ const CareerCard = React.memo(
               </motion.p>
               <motion.p
                 layout="position"
-                className="text-xs md:text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors"
+                className="flex flex-row gap-2 items-center text-xs md:text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors"
               >
-                {period}
+                {period.split(" - ")[0]}
+                <svg
+                  width="16px"
+                  height="16px"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="#9f9fa9"
+                  className="mt-1"
+                >
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <title></title>
+                    <g id="Complete">
+                      <g id="arrow-right">
+                        <g>
+                          <polyline
+                            data-name="Right"
+                            fill="none"
+                            id="Right-2"
+                            points="16.4 7 21.5 12 16.4 17"
+                            stroke="#9f9fa9"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            className="group-hover:stroke-white transition-colors duration-200"
+                          ></polyline>
+                          <line
+                            fill="none"
+                            stroke="#9f9fa9"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            x1="2.5"
+                            x2="19.2"
+                            y1="12"
+                            y2="12"
+                            className="group-hover:stroke-white"
+                          ></line>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </svg>{" "}
+                {period.split(" - ")[1]}
               </motion.p>
             </div>
 

@@ -14,6 +14,7 @@ import Intro from "@/components/intro/intro-screen";
 import { opacity, perspective, slide } from "./animations";
 // import CustomCursor from "@/components/custom-cursor";
 import ProjectSection from "@/components/projects";
+import Footer from "@/components/footer";
 
 export const ScrollProgress = () => {
   const { scrollYProgress } = useScroll();
@@ -86,6 +87,7 @@ const Index = () => {
           <CareerSection />
           <ProjectSection />
           <Skills />
+          <Footer />
           {/* <CareerSection />
     <CareerSection /> */}
         </>

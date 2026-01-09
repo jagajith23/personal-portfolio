@@ -50,7 +50,7 @@ const ROW_1 = [
 
 const ROW_2 = [
   { name: "TypeScript", icon: "typescript", color: "#3178C6" },
-  { name: "Next.js", icon: "nextjs", color: "#ffffff" },
+  { name: "Next.js", icon: "nextjs", color: "#000000" },
   { name: "React", icon: "react", color: "#61DAFB" },
   { name: "Tailwind", icon: "tailwind", color: "#06B6D4" },
   { name: "Framer", icon: "framer", color: "#0055FF" },
@@ -76,7 +76,7 @@ export default function SkillsVelocity() {
   return (
     <section
       id="skills"
-      className="relative max-w-7xl w-full py-24 bg-black overflow-hidden font-aoboshi items-center mx-auto justify-center"
+      className="cursor-default relative max-w-7xl w-full py-24 bg-black overflow-hidden font-aoboshi items-center mx-auto justify-center"
     >
       <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-black to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-black to-transparent z-10 pointer-events-none" />
@@ -91,6 +91,10 @@ export default function SkillsVelocity() {
           <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-b from-zinc-100 via-zinc-300 to-zinc-600 font-wind-song">
             Skills
           </h2>
+          {/* <p className="text-s text-zinc-500">
+            Backend, frontend, and cloud technologies I use to design, build,
+            and ship production-ready applications.
+          </p> */}
         </motion.div>
 
         <ParallaxText baseVelocity={-1}>
@@ -171,7 +175,7 @@ function SkillItem({
       className="flex items-center gap-4 group"
       style={{ "--hover-color": data.color } as React.CSSProperties}
     >
-      <div className="w-8 h-8 md:w-12 md:h-12 text-zinc-500 transition-all duration-300 group-hover:text-(--hover-color) group-hover:scale-110">
+      <div className="w-8 h-8 md:w-12 md:h-12 transition-all duration-300 text-(--hover-color) group-hover:scale-110">
         <TechIcon icon={data.icon} />
       </div>
 

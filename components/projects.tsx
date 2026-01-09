@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import MagneticButton from "./magnetic-button";
 
+type ProjectTag = "Freelance" | "Side Project" | "Internal";
+
 type Project = {
   id: number;
   title: string;
@@ -11,49 +13,68 @@ type Project = {
   imageUrl: string;
   projectUrl?: string;
   isInternal?: boolean;
+  tag: ProjectTag;
 };
 
 const PROJECTS: Project[] = [
   {
     id: 1,
-    title: "Project One",
-    description: "A brief description of Project One.",
+    title: "Riders Management & Analytics System",
+    description:
+      "Freelanced a end-to-end web app for managing riders, analytics, dashboards, etc.",
     imageUrl:
       "https://images.unsplash.com/photo-1765211003001-b9eb5cbfe1f3?q=80&w=600&auto=format&fit=crop",
     projectUrl: "https://qa-web-admin.captainasadgroupofcompanies.com/",
+    tag: "Freelance",
   },
   {
     id: 2,
-    title: "Live Auction Dashboard",
-    description: "Dashboard for managing auctions. (Internal Project)",
+    title: "Apollo",
+    description:
+      "Advanced Dashboard to monitor, manage, track auction and bids in real-time. (Internal Project)",
     imageUrl:
-      "https://images.unsplash.com/photo-1571327352610-1c5484ccc840?q=80&w=600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1631931021230-63b459676b7f?q=80&w=600&auto=format&fit=crop",
     isInternal: true,
+    tag: "Internal",
   },
   {
     id: 3,
+    title: "Live Auction Dashboard",
+    description:
+      "Dashboard for stakeholders to monitor & manage auctions. (Internal Project)",
+    imageUrl:
+      "https://images.unsplash.com/photo-1571327352610-1c5484ccc840?q=80&w=600&auto=format&fit=crop",
+    isInternal: true,
+    tag: "Internal",
+  },
+  {
+    id: 4,
     title: "Mystic",
-    description: "A language interpreter.",
+    description:
+      "A programming language in Java and Python, including tokenizer, parser, etc.",
     imageUrl:
       "https://images.unsplash.com/photo-1767257147725-89011434e351?q=80&w=600&auto=format&fit=crop",
     projectUrl: "https://github.com/jagajith23/mystic",
+    tag: "Side Project",
   },
-  //   {
-  //     id: 4,
-  //     title: "Project Three",
-  //     description: "A brief description of Project Two.",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1571327352610-1c5484ccc840?q=80&w=600&auto=format&fit=crop",
-  //     projectUrl: "https://example.com/project-one",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Project One",
-  //     description: "A brief description of Project One.",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1765211003001-b9eb5cbfe1f3?q=80&w=600&auto=format&fit=crop",
-  //     projectUrl: "https://qa-web-admin.captainasadgroupofcompanies.com/",
-  //   },
+  {
+    id: 5,
+    title: "Ignite",
+    description: "A portal to submit, track and manage ideas for employees.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1499796683658-b659bc751db1?q=80&w=600&auto=format&fit=crop",
+    // projectUrl: "https://qa-web-admin.captainasadgroupofcompanies.com/",
+    tag: "Internal",
+  },
+  {
+    id: 6,
+    title: "Evnzon",
+    description: "Freelanced an event booking platform powered by Flutter.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1530762312300-888baa333d74?q=80&w=600&auto=format&fit=crop",
+    // projectUrl: "https://example.com/project-one",
+    tag: "Freelance",
+  },
   //   {
   //     id: 6,
   //     title: "Project Two",
@@ -165,7 +186,7 @@ const ProjectSection = () => {
           ref={gridRef}
           layout
           transition={{ layout: { duration: 0.6, ease: "easeInOut" } }}
-          className={`grid grid-cols-1 md:grid-cols-3 gap-8`}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`}
         >
           {PROJECTS.map((item, index) => (
             <motion.div
@@ -236,6 +257,7 @@ interface ProjectCardProps {
   index?: number;
   isExpandedReady: boolean;
   isInternal?: boolean;
+  tag: "Freelance" | "Side Project" | "Internal";
 }
 
 const ProjectCard = ({
@@ -247,6 +269,7 @@ const ProjectCard = ({
   index,
   isExpandedReady,
   isInternal,
+  tag,
 }: ProjectCardProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -286,13 +309,31 @@ const ProjectCard = ({
                   : "opacity-0 pointer-events-none"
               }`}
             >
-              <MagneticButton onClick={handleClick} arrowHoverDirection="up" />
+              <MagneticButton
+                onClick={handleClick}
+                arrowHoverDirection="north-east"
+              />
             </div>
           </div>
           <h3 className="text-lg font-semibold">{title}</h3>
+
+          <span
+            className={`
+                w-fit rounded-full py-0.5 text-xs font-medium tracking-wide
+                ${
+                  tag === "Freelance"
+                    ? "bg-emerald-500/10 text-emerald-400"
+                    : tag === "Internal"
+                    ? "bg-purple-500/10 text-purple-400"
+                    : "bg-blue-500/10 text-blue-400"
+                }
+            `}
+          >
+            {tag}
+          </span>
+
           <p className="text-sm text-zinc-400">{description}</p>
 
-          {/* Read More Button */}
           <div className="mt-2 group">
             <Link
               href={`/project/${id}`}
