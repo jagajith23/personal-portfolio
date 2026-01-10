@@ -6,7 +6,7 @@ import MagneticButton from "./magnetic-button";
 import { smoothScrollTo } from "./navigation/smooth-scroll";
 import Image from "next/image";
 import BadgeStack from "./leetcode-badge-stack";
-import ClashRoyaleWidget from "./clash-royale-widget";
+// import ClashRoyaleWidget from "./clash-royale-widget";
 
 const SOCIALS = [
   { name: "GitHub", url: "https://github.com/jagajith23/" },
@@ -136,11 +136,10 @@ export default function Footer() {
             </div>
 
             <BadgeStack badges={badges} />
-
-            {/* --- ADD THE WIDGET HERE --- */}
+            {/* 
             <div className="mt-2">
               <ClashRoyaleWidget />
-            </div>
+            </div> */}
           </div>
 
           {/* Column 2: Sitemap */}
