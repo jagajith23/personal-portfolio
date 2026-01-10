@@ -76,7 +76,20 @@ export default function SkillsVelocity() {
   return (
     <section
       id="skills"
-      className="cursor-default relative max-w-7xl w-full py-24 bg-black overflow-hidden font-aoboshi items-center mx-auto justify-center"
+      className="
+        cursor-default
+        relative
+        max-w-7xl
+        w-full
+        py-24
+        mb-32 md:mb-40
+        bg-black
+        overflow-hidden
+        font-aoboshi
+        items-center
+        mx-auto
+        justify-center
+      "
     >
       <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-black to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-black to-transparent z-10 pointer-events-none" />

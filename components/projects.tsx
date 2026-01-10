@@ -3,87 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import MagneticButton from "./magnetic-button";
-
-type ProjectTag = "Freelance" | "Side Project" | "Internal";
-
-type Project = {
-  id: number;
-  title: string;
-  description: string;
-  imageUrl: string;
-  projectUrl?: string;
-  isInternal?: boolean;
-  tag: ProjectTag;
-};
-
-const PROJECTS: Project[] = [
-  {
-    id: 1,
-    title: "Riders Management & Analytics System",
-    description:
-      "Freelanced a end-to-end web app for managing riders, analytics, dashboards, etc.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1765211003001-b9eb5cbfe1f3?q=80&w=600&auto=format&fit=crop",
-    projectUrl: "https://qa-web-admin.captainasadgroupofcompanies.com/",
-    tag: "Freelance",
-  },
-  {
-    id: 2,
-    title: "Apollo",
-    description:
-      "Advanced Dashboard to monitor, manage, track auction and bids in real-time. (Internal Project)",
-    imageUrl:
-      "https://images.unsplash.com/photo-1631931021230-63b459676b7f?q=80&w=600&auto=format&fit=crop",
-    isInternal: true,
-    tag: "Internal",
-  },
-  {
-    id: 3,
-    title: "Live Auction Dashboard",
-    description:
-      "Dashboard for stakeholders to monitor & manage auctions. (Internal Project)",
-    imageUrl:
-      "https://images.unsplash.com/photo-1571327352610-1c5484ccc840?q=80&w=600&auto=format&fit=crop",
-    isInternal: true,
-    tag: "Internal",
-  },
-  {
-    id: 4,
-    title: "Mystic",
-    description:
-      "A programming language in Java and Python, including tokenizer, parser, etc.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1767257147725-89011434e351?q=80&w=600&auto=format&fit=crop",
-    projectUrl: "https://github.com/jagajith23/mystic",
-    tag: "Side Project",
-  },
-  {
-    id: 5,
-    title: "Ignite",
-    description: "A portal to submit, track and manage ideas for employees.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1499796683658-b659bc751db1?q=80&w=600&auto=format&fit=crop",
-    // projectUrl: "https://qa-web-admin.captainasadgroupofcompanies.com/",
-    tag: "Internal",
-  },
-  {
-    id: 6,
-    title: "Evnzon",
-    description: "Freelanced an event booking platform powered by Flutter.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1530762312300-888baa333d74?q=80&w=600&auto=format&fit=crop",
-    // projectUrl: "https://example.com/project-one",
-    tag: "Freelance",
-  },
-  //   {
-  //     id: 6,
-  //     title: "Project Two",
-  //     description: "A brief description of Project Two.",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1767257147725-89011434e351?q=80&w=600&auto=format&fit=crop",
-  //     projectUrl: "https://example.com/project-one",
-  //   },
-];
+import { PROJECTS } from "@/app/constants";
 
 const INITIAL_COUNT = 3;
 
@@ -219,14 +139,14 @@ const ProjectSection = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             transition={{
-              duration: 0.4,
+              duration: 0.7,
               ease: [0.16, 1, 0.3, 1],
             }}
             whileHover={{ y: 6 }}
             whileTap={{ scale: 0.95 }}
             className="cursor-pointer group mx-auto mt-20 flex flex-col items-center gap-2 text-zinc-300 hover:text-white"
           >
-            <span className="text-sm uppercase">See more</span>
+            <span className="text-sm tracking-tight">See more</span>
             <svg
               width="18"
               height="18"
@@ -315,11 +235,11 @@ const ProjectCard = ({
               />
             </div>
           </div>
-          <h3 className="text-lg font-semibold">{title}</h3>
-
-          <span
-            className={`
-                w-fit rounded-full py-0.5 text-xs font-medium tracking-wide
+          <div className="flex flex-row justify-between items-center">
+            <h3 className="text-lg font-semibold">{title}</h3>
+            <span
+              className={`
+                w-fit rounded-full py-0.5 px-3 text-xs font-medium tracking-wide
                 ${
                   tag === "Freelance"
                     ? "bg-emerald-500/10 text-emerald-400"
@@ -328,17 +248,18 @@ const ProjectCard = ({
                     : "bg-blue-500/10 text-blue-400"
                 }
             `}
-          >
-            {tag}
-          </span>
+            >
+              {tag}
+            </span>
+          </div>
 
           <p className="text-sm text-zinc-400">{description}</p>
 
-          <div className="mt-2 group">
+          <div className="mt-2">
             <Link
               href={`/project/${id}`}
               onClick={(e) => e.stopPropagation()}
-              className="inline-block text-sm text-zinc-300 hover:text-white transition-colors underline underline-offset-4"
+              className="inline-block text-sm text-zinc-300 hover:text-white transition-colors underline underline-offset-4 group"
             >
               <span className="flex items-center gap-1 underline underline-offset-4">
                 Read more

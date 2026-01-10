@@ -104,14 +104,12 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Social Links - Bottom Left */}
       <div className="absolute bottom-8 left-4 z-2 flex flex-col md:flex-row items-center gap-4 md:bottom-16 md:left-16 overflow-hidden">
         {SOCIAL_LINKS.map((link, idx) => (
           <MagneticSocialLink key={idx} {...link} idx={idx} />
         ))}
       </div>
 
-      {/* Action Buttons - Bottom Right */}
       <motion.div
         variants={buttonVariants}
         className="absolute bottom-8 right-4 z-2 md:bottom-16 md:right-16 flex flex-col md:flex-row items-center gap-4"
@@ -120,7 +118,7 @@ export default function Hero() {
           onClick={handleDownloadResume}
           title="Resume"
           arrowDirection="south-east"
-          arrowHoverDirection="south"
+          arrowHoverDirection="north"
         />
         <MagneticButton
           onClick={() => smoothScrollTo("#about")}
