@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-// --- Types ---
 type ClashCard = {
   id: number;
   name: string;
@@ -44,9 +43,8 @@ export default function ClashRoyaleWidget() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col gap-3 w-full max-w-[280px]"
+      className="flex flex-col gap-3 w-full max-w-70"
     >
-      {/* Text Header - Clean & Minimal */}
       <div className="flex items-center gap-2 text-xs text-zinc-400">
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
@@ -57,7 +55,6 @@ export default function ClashRoyaleWidget() {
         <span className="text-zinc-400 font-bold">{data.trophies} 🏆</span>
       </div>
 
-      {/* The Stacked Deck (Bigger & Overlapping) */}
       <div className="flex items-center -space-x-3 pl-1">
         {data.currentDeck.map((card, index) => (
           <div
@@ -88,7 +85,6 @@ export default function ClashRoyaleWidget() {
         ))}
       </div>
 
-      {/* Footer Info */}
       <p className="text-[10px] text-zinc-500 flex items-center ml-1 justify-between">
         <div className="flex gap-1.5 items-center">
           <span className="text-zinc-600">Arena:</span>
@@ -104,10 +100,9 @@ export default function ClashRoyaleWidget() {
   );
 }
 
-// --- Loading State ---
 function SkeletonLoader() {
   return (
-    <div className="flex flex-col gap-3 w-full max-w-[250px]">
+    <div className="flex flex-col gap-3 w-full max-w-62.5">
       <div className="flex items-center gap-2">
         <div className="w-2 h-2 rounded-full bg-zinc-800 animate-pulse" />
         <div className="w-24 h-3 bg-zinc-900 rounded animate-pulse" />

@@ -34,7 +34,7 @@ const HoverPreview = ({
         scale: visible ? 1 : 0.96,
       }}
       transition={{ duration: 0.2 }}
-      className="fixed pointer-events-none z-[9999]"
+      className="fixed pointer-events-none z-9999"
     >
       <div className="w-60 h-40 border border-zinc-700 bg-black">
         {images[0] && (

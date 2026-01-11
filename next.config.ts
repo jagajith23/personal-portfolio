@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "api-assets.clashroyale.com",
       },
+      {
+        protocol: "https",
+        hostname: "api.nuget.org",
+      },
     ],
   },
 };

@@ -110,19 +110,19 @@ export default function SkillsVelocity() {
           </p> */}
         </motion.div>
 
-        <ParallaxText baseVelocity={-1}>
+        <ParallaxText baseVelocity={-0.7}>
           {ROW_1.map((skill, i) => (
             <SkillItem key={i} data={skill} />
           ))}
         </ParallaxText>
 
-        <ParallaxText baseVelocity={1}>
+        <ParallaxText baseVelocity={0.7}>
           {ROW_2.map((skill, i) => (
             <SkillItem key={i} data={skill} />
           ))}
         </ParallaxText>
 
-        <ParallaxText baseVelocity={-0.8}>
+        <ParallaxText baseVelocity={-0.5}>
           {ROW_3.map((skill, i) => (
             <SkillItem key={i} data={skill} />
           ))}
@@ -199,7 +199,7 @@ function SkillItem({
   );
 }
 
-function TechIcon({ icon }: { icon: string }) {
+export const TechIcon = ({ icon }: { icon: string }) => {
   const paths: Record<string, React.ReactNode> = {
     python: <Python />,
     azure: <MicrosoftAzure />,
@@ -242,4 +242,4 @@ function TechIcon({ icon }: { icon: string }) {
       {content}
     </svg>
   );
-}
+};
