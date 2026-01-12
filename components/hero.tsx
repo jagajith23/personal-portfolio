@@ -70,7 +70,7 @@ export default function Hero() {
 
   const handleDownloadResume = () => {
     // Assuming resume.pdf is in the public folder
-    window.open("/resume.pdf", "_blank");
+    window.open("/Jagajith B Software Engineer Resume.pdf", "_blank");
   };
 
   return (

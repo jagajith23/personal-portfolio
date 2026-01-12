@@ -14,8 +14,11 @@ import { Fragment, useRef } from "react";
 import {
   CSharp,
   CSS,
+  Dart,
   Docker,
+  ExpressjsDark,
   FlaskDark,
+  Flutter,
   FramerDark,
   Git,
   HTML5,
@@ -28,10 +31,12 @@ import {
   MongoDBDark,
   Nextjs,
   Nginx,
+  Nodejs,
   PostgreSQL,
   Python,
   ReactDark,
   Redis,
+  Sass,
   SocketIODark,
   TailwindCSS,
   TanStack,
@@ -233,6 +238,11 @@ export const TechIcon = ({ icon }: { icon: string }) => {
     redis: <Redis />,
     framer: <FramerDark />,
     ".net": <MicrosoftNET />,
+    sass: <Sass />,
+    nodejs: <Nodejs />,
+    express: <ExpressjsDark />,
+    flutter: <Flutter />,
+    dart: <Dart />,
   };
 
   const content = paths[icon] || <circle cx="12" cy="12" r="10" />;

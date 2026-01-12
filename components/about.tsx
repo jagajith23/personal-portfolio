@@ -143,25 +143,6 @@ const About = () => {
   );
 };
 
-// const StatItem = ({
-//   label,
-//   value,
-//   colSpan = "1",
-// }: {
-//   label: string;
-//   value: string;
-//   colSpan?: string;
-// }) => (
-//   <div className={`flex flex-col gap-1 font-aoboshi ${colSpan}`}>
-//     <span className="text-xs text-zinc-600 uppercase tracking-wider">
-//       {label}
-//     </span>
-//     <span className="text-xl md:text-2xl font-semibold text-zinc-200">
-//       {value}
-//     </span>
-//   </div>
-// );
-
 const StatItem = ({
   label,
   value,

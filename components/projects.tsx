@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import MagneticButton from "./magnetic-button";
 import { PROJECTS } from "@/app/constants";
+import { useRouter } from "next/navigation";
 
 const INITIAL_COUNT = 3;
 
@@ -28,6 +29,7 @@ const cardVariants: Variants = {
     y: 40,
   },
 };
+
 const ProjectSection = () => {
   const [showAll, setShowAll] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -191,11 +193,20 @@ const ProjectCard = ({
   isInternal,
   tag,
 }: ProjectCardProps) => {
+  const router = useRouter();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+
   const handleClick = () => {
-    window.open(projectUrl, isInternal ? "_self" : "_blank");
+    if (!projectUrl) return;
+
+    if (isInternal) {
+      router.push(projectUrl);
+    } else {
+      window.open(projectUrl, "_blank");
+    }
   };
+
   return (
     <div onClick={projectUrl ? handleClick : undefined}>
       <div ref={ref}>
@@ -230,7 +241,7 @@ const ProjectCard = ({
               }`}
             >
               <MagneticButton
-                onClick={handleClick}
+                onClick={() => router.push(projectUrl || "")}
                 arrowHoverDirection="north-east"
               />
             </div>
@@ -256,10 +267,12 @@ const ProjectCard = ({
           <p className="text-sm text-zinc-400">{description}</p>
 
           <div className="mt-2">
-            <Link
-              href={`/project/${id}`}
-              onClick={(e) => e.stopPropagation()}
-              className="inline-block text-sm text-zinc-300 hover:text-white transition-colors underline underline-offset-4 group"
+            <p
+              onClick={(e) => {
+                router.push(`/project/${id}`);
+                e.stopPropagation();
+              }}
+              className="cursor-pointer inline-block text-sm text-zinc-300 hover:text-white transition-colors underline underline-offset-4 group"
             >
               <span className="flex items-center gap-1 underline underline-offset-4">
                 Read more
@@ -309,7 +322,7 @@ const ProjectCard = ({
                   </g>
                 </svg>
               </span>
-            </Link>
+            </p>
           </div>
         </div>
       </div>

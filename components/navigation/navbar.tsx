@@ -20,7 +20,7 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-      className="fixed top-6 left-0 right-0 z-50 flex items-center justify-center pointer-events-none"
+      className="fixed top-6 left-0 right-0 z-30 flex items-center justify-center pointer-events-none"
     >
       <nav
         className="

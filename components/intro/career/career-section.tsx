@@ -177,7 +177,7 @@ const HoverImage = ({
         opacity: { duration: 0.2, ease: "linear" },
         scale: { duration: 0.2, ease: "linear" },
       }}
-      className="fixed top-0 left-0 pointer-events-none z-50 w-75 h-45 overflow-hidden bg-zinc-900 shadow-2xl hidden md:block rounded-xl"
+      className="fixed top-0 left-0 pointer-events-none z-40 w-75 h-45 overflow-hidden bg-zinc-900 shadow-2xl hidden md:block rounded-xl"
     >
       <AnimatePresence mode="popLayout">
         {active && currentImage && (

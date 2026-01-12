@@ -69,7 +69,7 @@ export default function Intro({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black"
       initial={{ y: 0 }}
       animate={exit ? { y: "-100%" } : { y: 0 }}
       transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }} // Custom bezier for smooth "curtain" feel

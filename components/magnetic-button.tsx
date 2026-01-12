@@ -10,7 +10,7 @@ type ArrowDirection =
   | "south";
 
 interface MagneticButtonProps {
-  onClick: () => void;
+  onClick: (e?: React.MouseEvent) => void;
   title?: string;
   size?: "sm" | "md" | "lg";
   arrowHoverDirection?: ArrowDirection;
