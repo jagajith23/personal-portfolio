@@ -203,7 +203,7 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
                   <p className="text-xs uppercase tracking-wider text-zinc-500 mb-4 font-medium">
                     Stack
                   </p>
-                  <ul className="grid grid-cols-1 xl:grid-cols-2 gap-x-4 gap-y-2">
+                  <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
                     {project.details.techStack.map((tech, i) => (
                       <motion.li
                         key={i}

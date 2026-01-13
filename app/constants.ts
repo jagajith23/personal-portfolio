@@ -67,7 +67,6 @@ export const PROJECTS: Project[] = [
       "Auction Management System to monitor, manage, track auction, bids and offers in real-time.",
     imageUrl:
       "https://images.unsplash.com/photo-1631931021230-63b459676b7f?q=80&w=600&auto=format&fit=crop",
-    isInternal: true,
     tag: "Internal",
     details: {
       role: "Software Engineer I",
@@ -110,7 +109,6 @@ export const PROJECTS: Project[] = [
       "Minimal dashboard for stakeholders to monitor & manage auctions.",
     imageUrl:
       "https://images.unsplash.com/photo-1571327352610-1c5484ccc840?q=80&w=600&auto=format&fit=crop",
-    isInternal: true,
     tag: "Internal",
     details: {
       role: "Frontend Developer",
@@ -189,26 +187,26 @@ export const PROJECTS: Project[] = [
       `,
     },
   },
-  {
-    id: 6,
-    title: "Evnzon",
-    description: "Freelanced an event booking platform powered by Flutter.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1530762312300-888baa333d74?q=80&w=600&auto=format&fit=crop",
-    tag: "Freelance",
-    details: {
-      role: "Mobile Application Developer",
-      techStack: [
-        { name: "Flutter", icon: "flutter" },
-        { name: "Dart", icon: "dart" },
-      ],
-      detailedDescription: `
-        Built a cross-platform mobile application for discovering local events and connecting users with listed event agents.
+  // {
+  //   id: 6,
+  //   title: "Evnzon",
+  //   description: "Freelanced an event booking platform powered by Flutter.",
+  //   imageUrl:
+  //     "https://images.unsplash.com/photo-1530762312300-888baa333d74?q=80&w=600&auto=format&fit=crop",
+  //   tag: "Freelance",
+  //   details: {
+  //     role: "Mobile Application Developer",
+  //     techStack: [
+  //       { name: "Flutter", icon: "flutter" },
+  //       { name: "Dart", icon: "dart" },
+  //     ],
+  //     detailedDescription: `
+  //       Built a cross-platform mobile application for discovering local events and connecting users with listed event agents.
 
-        The app allows users to browse events, view agent profiles, and book calls directly with agents for inquiries and coordination. Implemented structured navigation, responsive layouts, and state management using Flutter Provider to ensure a smooth and consistent experience across both iOS and Android devices.
-      `,
-    },
-  },
+  //       The app allows users to browse events, view agent profiles, and book calls directly with agents for inquiries and coordination. Implemented structured navigation, responsive layouts, and state management using Flutter Provider to ensure a smooth and consistent experience across both iOS and Android devices.
+  //     `,
+  //   },
+  // },
 ];
 
 export const DURATION = 1.2;

@@ -32,6 +32,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "docs.k8slens.dev",
       },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+      },
     ],
   },
 };

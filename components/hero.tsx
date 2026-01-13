@@ -69,7 +69,6 @@ export default function Hero() {
   };
 
   const handleDownloadResume = () => {
-    // Assuming resume.pdf is in the public folder
     window.open("/Jagajith B Software Engineer Resume.pdf", "_blank");
   };
 
@@ -110,23 +109,24 @@ export default function Hero() {
         ))}
       </div>
 
-      <motion.div
-        variants={buttonVariants}
-        className="absolute bottom-8 right-4 z-2 md:bottom-16 md:right-16 flex flex-col md:flex-row items-center gap-4"
-      >
-        <MagneticButton
-          onClick={handleDownloadResume}
-          title="Resume"
-          arrowDirection="south-east"
-          arrowHoverDirection="north"
-        />
-        <MagneticButton
-          onClick={() => smoothScrollTo("#about")}
-          title="Explore"
-          arrowDirection="north-east"
-          arrowHoverDirection="south-east"
-        />
-      </motion.div>
+      <div className="absolute bottom-8 right-4 z-2 md:bottom-16 md:right-16 flex flex-col md:flex-row items-center gap-4">
+        <motion.div variants={buttonVariants(1)}>
+          <MagneticButton
+            onClick={handleDownloadResume}
+            title="Resume"
+            arrowDirection="south-east"
+            arrowHoverDirection="north"
+          />
+        </motion.div>
+        <motion.div variants={buttonVariants(1.2)}>
+          <MagneticButton
+            onClick={() => smoothScrollTo("#about")}
+            title="Explore"
+            arrowDirection="north-east"
+            arrowHoverDirection="south-east"
+          />
+        </motion.div>
+      </div>
     </motion.section>
   );
 }

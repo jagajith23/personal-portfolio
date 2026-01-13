@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Aoboshi_One, WindSong } from "next/font/google";
-import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -33,17 +32,6 @@ const windSong = WindSong({
   variable: "--font-wind-song",
 });
 
-export const derry = localFont({
-  src: [
-    {
-      path: "../public/fonts/Mollas-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-  ],
-  variable: "--font-derry",
-});
-
 export default function RootLayout({
   children,
 }: {
@@ -51,6 +39,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/favicon_io/apple-touch-icon.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/favicon_io/favicon-32x32.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/favicon_io/favicon-16x16.png"
+      />
+      <link rel="manifest" href="/favicon_io/site.webmanifest" />
       <body
         className={`
           ${geistSans.variable}

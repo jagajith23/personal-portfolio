@@ -2,11 +2,14 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { smoothScrollTo } from "./smooth-scroll";
 
 const Navbar = () => {
+  const [activeTab, setActiveTab] = useState<string>("about");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
+
+  const currentTab = hoveredTab ?? activeTab;
 
   const links = [
     { id: "about", label: "About" },
@@ -14,6 +17,32 @@ const Navbar = () => {
     { id: "projects", label: "Projects" },
     { id: "skills", label: "Skills" },
   ];
+
+  useEffect(() => {
+    const sections = links.map((l) => document.getElementById(l.id));
+
+    const onScroll = () => {
+      const scrollY = window.scrollY + window.innerHeight * 0.4;
+
+      for (const section of sections) {
+        if (!section) continue;
+
+        const { top, bottom } = section.getBoundingClientRect();
+        const offsetTop = top + window.scrollY;
+        const offsetBottom = bottom + window.scrollY;
+
+        if (scrollY >= offsetTop && scrollY < offsetBottom) {
+          setActiveTab(section.id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <motion.header
@@ -52,32 +81,41 @@ const Navbar = () => {
 
         <div className="h-4 w-px bg-white/10 shrink-0" />
 
-        <ul className="flex items-center gap-px sm:gap-1 md:gap-2 font-aoboshi">
-          {links.map((link) => (
-            <li key={link.id}>
-              <button
-                onClick={() => smoothScrollTo(`#${link.id}`)}
-                onMouseEnter={() => setHoveredTab(link.id)}
-                onMouseLeave={() => setHoveredTab(null)}
-                className="
-                  relative cursor-pointer
-                  px-2.5 py-1.5 text-xs 
-                  md:px-4 md:text-sm 
-                  
-                  font-medium text-zinc-400 transition-colors hover:text-white
-                "
-              >
-                {hoveredTab === link.id && (
+        <ul className="relative flex items-center gap-px sm:gap-1 md:gap-2 font-aoboshi">
+          {links.map((link) => {
+            const isActive = currentTab === link.id;
+
+            return (
+              <li key={link.id} className="relative">
+                {isActive && (
                   <motion.div
                     layoutId="nav-pill"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    className="absolute inset-0 -z-10 rounded-full bg-white/10"
+                    className="absolute inset-0 rounded-full bg-white/10"
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 35,
+                    }}
                   />
                 )}
-                <span className="relative z-10">{link.label}</span>
-              </button>
-            </li>
-          ))}
+
+                <button
+                  onClick={() => smoothScrollTo(`#${link.id}`)}
+                  onMouseEnter={() => setHoveredTab(link.id)}
+                  onMouseLeave={() => setHoveredTab(null)}
+                  className="
+                    relative z-10 cursor-pointer
+                    px-2.5 py-1.5 text-xs
+                    md:px-4 md:text-sm
+                    font-medium transition-colors
+                    text-zinc-400 hover:text-white
+                  "
+                >
+                  {link.label}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </motion.header>

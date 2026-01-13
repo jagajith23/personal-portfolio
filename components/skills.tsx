@@ -61,7 +61,7 @@ const ROW_2 = [
   { name: "Framer", icon: "framer", color: "#0055FF" },
   { name: "JavaScript", icon: "javascript", color: "#F7DF1E" },
   { name: "HTML5", icon: "html", color: "#E34F26" },
-  { name: "CSS3", icon: "css", color: "#1572B6" },
+  { name: "Sass", icon: "sass", color: "#1572B6" },
   { name: "TanStack", icon: "tanstack", color: "#1572B6" },
 ];
 

@@ -6,6 +6,7 @@ import MagneticButton from "./magnetic-button";
 import { smoothScrollTo } from "./navigation/smooth-scroll";
 import Image from "next/image";
 import BadgeStack from "./leetcode-badge-stack";
+import MusicWidget from "./music-widget";
 // import ClashRoyaleWidget from "./clash-royale-widget";
 
 const SOCIALS = [
@@ -156,6 +157,12 @@ export default function Footer() {
             </p>
 
             <BadgeStack badges={badges} />
+            <div className="flex flex-col gap-2">
+              <p className="text-zinc-500 tracking-tighter text-sm">
+                On Repeat
+              </p>
+              <MusicWidget />
+            </div>
             {/* 
             <div className="mt-2">
               <ClashRoyaleWidget />

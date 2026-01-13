@@ -1,6 +1,5 @@
 import { AnimatePresence, motion, useInView, Variants } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import MagneticButton from "./magnetic-button";
 import { PROJECTS } from "@/app/constants";
@@ -178,7 +177,6 @@ interface ProjectCardProps {
   id: number;
   index?: number;
   isExpandedReady: boolean;
-  isInternal?: boolean;
   tag: "Freelance" | "Side Project" | "Internal";
 }
 
@@ -190,7 +188,6 @@ const ProjectCard = ({
   id,
   index,
   isExpandedReady,
-  isInternal,
   tag,
 }: ProjectCardProps) => {
   const router = useRouter();
@@ -199,16 +196,11 @@ const ProjectCard = ({
 
   const handleClick = () => {
     if (!projectUrl) return;
-
-    if (isInternal) {
-      router.push(projectUrl);
-    } else {
-      window.open(projectUrl, "_blank");
-    }
+    window.open(projectUrl, "_blank");
   };
 
   return (
-    <div onClick={projectUrl ? handleClick : undefined}>
+    <div>
       <div ref={ref}>
         <div className="flex flex-col gap-2 overflow-hidden duration-300 text-white w-full h-full rounded-t-xl">
           <div className="relative w-full h-56 overflow-hidden rounded-xl transition-colors duration-300 items-start md:items-center justify-center flex group">
@@ -241,7 +233,7 @@ const ProjectCard = ({
               }`}
             >
               <MagneticButton
-                onClick={() => router.push(projectUrl || "")}
+                onClick={handleClick}
                 arrowHoverDirection="north-east"
               />
             </div>
