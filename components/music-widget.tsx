@@ -259,10 +259,12 @@ export default function MusicWidget() {
   );
 }
 
+const BAR_DURATIONS = [0.55, 0.7, 0.5, 0.65];
+
 function AnimatedBars() {
   return (
     <div className="flex items-end gap-[2px] h-3">
-      {[1, 2, 3, 4].map((bar) => (
+      {[0, 1, 2, 3].map((bar) => (
         <motion.div
           key={bar}
           className="w-[2px] bg-emerald-500 rounded-t-sm"
@@ -270,7 +272,7 @@ function AnimatedBars() {
             height: [4, 12, 4],
           }}
           transition={{
-            duration: 0.5 + Math.random() * 0.5,
+            duration: BAR_DURATIONS[bar],
             repeat: Infinity,
             ease: "easeInOut",
           }}

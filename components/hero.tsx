@@ -169,7 +169,7 @@ function MaskedReveal({
       {accent && (
         <motion.span
           variants={{
-            hidden: { scale: 0, opacity: 0 },
+            hidden: { scale: 0.6, opacity: 0 },
             visible: {
               scale: 1,
               opacity: 1,
@@ -250,7 +250,7 @@ function MagneticSocialLink({
         transition: {
           duration: 0.75,
           ease: [0.33, 1, 0.68, 1],
-          delay: 0.2 * (idx + 1),
+          delay: 0.05 * idx,
         },
       }}
     >

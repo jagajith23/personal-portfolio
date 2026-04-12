@@ -103,7 +103,7 @@ export default function SkillsVelocity() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
           className="px-6 md:px-12 mb-4"
         >
           <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-b from-zinc-100 via-zinc-300 to-zinc-600 font-wind-song">
@@ -193,11 +193,11 @@ function SkillItem({
       className="flex items-center gap-4 group"
       style={{ "--hover-color": data.color } as React.CSSProperties}
     >
-      <div className="w-8 h-8 md:w-12 md:h-12 transition-all duration-300 text-(--hover-color) group-hover:scale-110">
+      <div className="w-8 h-8 md:w-12 md:h-12 transition-transform duration-300 ease-out text-(--hover-color) group-hover:scale-110">
         <TechIcon icon={data.icon} />
       </div>
 
-      <span className="text-xl md:text-2xl font-bold text-zinc-600 transition-colors duration-300 group-hover:text-zinc-200">
+      <span className="text-xl md:text-2xl font-bold text-zinc-600 transition-[color] duration-300 ease-out group-hover:text-zinc-200">
         {data.name}
       </span>
     </div>

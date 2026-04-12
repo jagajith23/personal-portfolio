@@ -71,6 +71,7 @@ export default function MagneticButton({
       style={{ x: xSpring, y: ySpring }}
       initial="initial"
       whileHover="hover"
+      whileTap={{ scale: 0.97 }}
       className={`cursor-pointer group relative flex items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 backdrop-blur-sm transition-colors duration-500 hover:border-white/30 ${sizeClasses[size]}`}
     >
       <div className="absolute inset-0 translate-y-full bg-white transition-transform duration-500 ease-[cubic-bezier(0.87,0,0.13,1)] group-hover:translate-y-0" />
@@ -90,7 +91,7 @@ export default function MagneticButton({
             initial: { rotate: rotationMap[arrowDirection] },
             hover: { rotate: rotationMap[arrowHoverDirection] },
           }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
         >
           <path
             d="M7 17L17 7M17 7H7M17 7V17"

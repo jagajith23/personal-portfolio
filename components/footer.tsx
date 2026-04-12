@@ -99,7 +99,7 @@ export default function Footer() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
             >
               <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-white">
                 Have an idea?
@@ -224,9 +224,9 @@ export default function Footer() {
                     object-center
                     scale-105
                     hover:scale-115
-                    transition-all
-                    duration-500
-                    ease-in-out
+                    transition-transform
+                    duration-300
+                    ease-out
                 "
               />
             </div>
@@ -303,9 +303,9 @@ function CopyEmail({ email }: { email: string }) {
           {copied ? (
             <motion.span
               key="copied"
-              initial={{ opacity: 0, scale: 0.5 }}
+              initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
+              exit={{ opacity: 0, scale: 0.8 }}
               className="text-emerald-500 text-xs font-bold px-2 py-1 bg-emerald-500/10 rounded-full"
             >
               Copied!

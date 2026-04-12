@@ -96,12 +96,13 @@ export default function MemeTrail() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
           className="space-y-4"
         >
           <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-b from-zinc-100 via-zinc-300 to-zinc-600 font-wind-song">
             After Hours
           </h2>
+          <p className="text-zinc-600">Try moving your cursor around</p>
         </motion.div>
       </div>
 
@@ -133,9 +134,9 @@ export default function MemeTrail() {
           {trail.map((item) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, scale: 0.5, x: item.x, y: item.y }}
+              initial={{ opacity: 0, scale: 0.85, x: item.x, y: item.y }}
               animate={{ opacity: 1, scale: 1, x: item.x, y: item.y }}
-              exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.5 } }}
+              exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.3 } }}
               transition={{ type: "spring", damping: 15, stiffness: 200 }}
               style={{
                 position: "absolute",

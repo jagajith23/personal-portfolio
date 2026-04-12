@@ -2,7 +2,7 @@ import { Variants } from "framer-motion";
 import { DELAY, DURATION, EASE } from "./constants";
 
 export const buttonVariants = (delay: number): Variants => ({
-  hidden: { scale: 0, opacity: 0 },
+  hidden: { scale: 0.85, opacity: 0 },
   visible: {
     scale: 1,
     opacity: 1,

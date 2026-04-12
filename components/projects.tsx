@@ -76,7 +76,7 @@ const ProjectSection = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
         className="mb-12"
       >
         <h2 className="text-3xl font-bold bg-clip-text h-10 text-transparent bg-linear-to-b from-zinc-100 via-zinc-300 to-zinc-600 font-wind-song">

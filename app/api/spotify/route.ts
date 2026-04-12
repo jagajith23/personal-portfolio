@@ -1,59 +1,37 @@
 import { NextResponse } from "next/server";
 
-const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
-const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
-const PLAYLIST_ID = process.env.SPOTIFY_PLAYLIST_ID;
-
-const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
-const PLAYLIST_ENDPOINT = `https://api.spotify.com/v1/playlists/${PLAYLIST_ID}`;
-
-async function getAccessToken() {
-  const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
-
-  const response = await fetch(TOKEN_ENDPOINT, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${basic}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      grant_type: "client_credentials",
-    }),
-    cache: "no-store",
-  });
-
-  return response.json();
-}
+const tracks = [
+  { title: "Let Her Go", artist: "Passenger" },
+  { title: "Iris", artist: "Goo Goo Dolls" },
+  { title: "Love Me Again", artist: "John Newman" },
+  { title: "Line Without a Hook", artist: "Ricky Montgomery" },
+  { title: "Love Me Not", artist: "Ravyn Lenae" },
+  { title: "Let Down", artist: "Radiohead" },
+  { title: "Atlantis", artist: "Seafret" },
+  { title: "Golden Brown", artist: "The Stranglers" },
+  { title: "A Thousand Years", artist: "Christina Perri" },
+  { title: "The Night We Met", artist: "Lord Huron" },
+  { title: "Heat Waves", artist: "Glass Animals" },
+  { title: "End of Beginning", artist: "Djo" },
+  { title: "Talking to the Moon", artist: "Bruno Mars" },
+  { title: "Those Eyes", artist: "New West" },
+  { title: "Middle of the Night", artist: "Elley Duhé" },
+  { title: "Riptide", artist: "Vance Joy" },
+  { title: "Only Love Can Hurt Like This", artist: "Paloma Faith" },
+  { title: "I Want It That Way", artist: "Backstreet Boys" },
+  { title: "Safe and Sound", artist: "Taylor Swift" },
+  { title: "My Way", artist: "Frank Sinatra" },
+  { title: "Driver's License", artist: "Olivia Rodrigo" },
+  { title: "Paradise", artist: "Coldplay" },
+  { title: "Where Is My Mind?", artist: "Pixies" },
+  { title: "Can't Help Falling in Love", artist: "Elvis Presley" },
+  { title: "The Winner Takes It All", artist: "ABBA" },
+  { title: "Forever", artist: "Chris Brown" },
+].map((track) => ({
+  ...track,
+  searchQuery: `${track.artist} ${track.title}`,
+}));
 
 export async function GET() {
-  try {
-    const { access_token } = await getAccessToken();
-
-    const response = await fetch(PLAYLIST_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      throw new Error(`Spotify API Error: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-
-    const tracks = data.tracks.items.map((item: any) => ({
-      title: item.track.name,
-      artist: item.track.artists[0].name,
-      searchQuery: `${item.track.artists[0].name} ${item.track.name}`,
-    }));
-
-    return NextResponse.json({ tracks });
-  } catch (error) {
-    console.error("Spotify API Error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch music" },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json({ tracks });
 }
