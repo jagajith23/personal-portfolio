@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jagajith B — Personal Portfolio
+
+A single-page, animation-driven personal portfolio for Jagajith B (Software Engineer), featuring a scroll-based narrative, dynamic project detail pages, and a few live data widgets.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router) + React 19
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Animation:** Framer Motion
+- **Smooth scroll:** Lenis (`@studio-freight/lenis`)
+- **3D / WebGL:** Three.js
+- **Icons:** svgl-react, lucide-react
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies and run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run start` | Run the production build |
+| `npm run lint` | Run ESLint |
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file in the project root:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Required for the Clash Royale widget / API route
+CLASH_ROYALE_API_KEY=your_supercell_api_token
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The LeetCode badges and music (iTunes preview) integrations require no API keys.
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/
+  api/            # Route handlers (clash-royale, leetcode-badges, spotify)
+  project/[id]/   # Dynamic project detail pages
+  constants.ts    # Project + career data, shared constants
+  index.tsx       # Page composition (sections)
+  layout.tsx      # Root layout, fonts, metadata
+components/        # Section + UI components
+lib/              # Utilities (cn helper)
+public/           # Static assets (images, fonts, resume, videos)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Features
+
+- Scroll-spy navigation with an animated active indicator
+- Masked text reveals, magnetic buttons, and per-character scroll coloring
+- Expandable project grid with dynamic detail pages
+- Velocity-based skills marquee
+- Live LeetCode badges and an iTunes-preview music widget in the footer
+
+## Deployment
+
+Optimized for deployment on [Vercel](https://vercel.com). Remember to set `CLASH_ROYALE_API_KEY` in the project's environment variables.

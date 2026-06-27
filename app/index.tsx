@@ -10,35 +10,40 @@ import { useEffect } from "react";
 import ProjectSection from "@/components/projects";
 import Footer from "@/components/footer";
 import MemeTrail from "@/components/meme-trail";
+import { DesignProvider } from "@/components/design-provider";
+import FunZone from "@/components/fun/fun-zone";
 
 const Index = () => {
-  useEffect(() => {
-    const lenis = new Lenis();
+    useEffect(() => {
+        const lenis = new Lenis();
 
-    const raf = (time: number) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
+        const raf = (time: number) => {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        };
 
-    requestAnimationFrame(raf);
+        requestAnimationFrame(raf);
 
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
+        return () => {
+            lenis.destroy();
+        };
+    }, []);
 
-  return (
-    <div className="w-screen bg-black">
-      <Navbar />
-      <Hero />
-      <About />
-      <CareerSection />
-      <ProjectSection />
-      <Skills />
-      <MemeTrail />
-      <Footer />
-    </div>
-  );
+    return (
+        <DesignProvider>
+            <div className="w-screen bg-black">
+                <Navbar />
+                <Hero />
+                <About />
+                <CareerSection />
+                <ProjectSection />
+                <Skills />
+                <MemeTrail />
+                <Footer />
+            </div>
+            <FunZone />
+        </DesignProvider>
+    );
 };
 
 export default Index;

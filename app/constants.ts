@@ -189,6 +189,31 @@ export const PROJECTS: Project[] = [
   },
   // {
   //   id: 6,
+  //   title: "Paprika — Butchery Application",
+  //   description:
+  //     "Butchery management application for inventory, orders and processing.",
+  //   imageUrl:
+  //     "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop",
+  //   projectUrl: "https://qa-butchery.captainasadgroupofcompanies.com",
+  //   tag: "Freelance",
+  //   details: {
+  //     role: "Full Stack Developer",
+  //     techStack: [
+  //       { name: "Next.js", icon: "nextjs" },
+  //       { name: "React", icon: "react" },
+  //       { name: "TypeScript", icon: "typescript" },
+  //       { name: "Tailwind", icon: "tailwind" },
+  //       { name: "Node.js", icon: "nodejs" },
+  //       { name: ".NET Core", icon: ".net" },
+  //       { name: "Docker", icon: "docker" },
+  //       { name: "Git", icon: "git" },
+  //     ],
+  //     detailedDescription:
+  //       "## Overview\n\nPaprika is a Butchery Application used to manage inventory, stock-keeping units, order processing, cutting schedules, and reporting for retail butchery operations. The system includes product cataloging, per-cut inventory tracking, batch and lot management, sales and order workflows, and role-based access for butchery staff and managers.\n\n## Local Repositories\n\n- Frontend: /Users/jagajith23/Projects/paprika-frontend\n- Backend / Services: /Users/jagajith23/Projects/PaprikaButchery\n\n## Access\n\nThe QA deployment is available at https://qa-butchery.captainasadgroupofcompanies.com.\n\n## Responsibilities\n\nWorked on the frontend and integration layers, implementing UI for inventory and order workflows, integrating APIs, and ensuring reliable deployments and observability.",
+  //   },
+  // },
+  // {
+  //   id: 6,
   //   title: "Evnzon",
   //   description: "Freelanced an event booking platform powered by Flutter.",
   //   imageUrl:

@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 /* -------------------------------------------------------
    Root Design Tokens — The Derry Aesthetic
 ------------------------------------------------------- */
@@ -13,71 +11,14 @@
   --accent-rust: #6b1818;
   --accent-fog: #3a3a3a;
 
-  /* Legacy semantic tokens (optional but useful) */
+  /* Signature accent — change this single value to re-theme the site */
+  --accent-signature: #10b981;
 
   --radius: 0.625rem;
 
-  --background: oklch(1 0 0);
-
-  --foreground: oklch(0.145 0 0);
-
-  --card: oklch(1 0 0);
-
-  --card-foreground: oklch(0.145 0 0);
-
-  --popover: oklch(1 0 0);
-
-  --popover-foreground: oklch(0.145 0 0);
-
-  --primary: oklch(0.205 0 0);
-
-  --primary-foreground: oklch(0.985 0 0);
-
-  --secondary: oklch(0.97 0 0);
-
-  --secondary-foreground: oklch(0.205 0 0);
-
-  --muted: oklch(0.97 0 0);
-
-  --muted-foreground: oklch(0.556 0 0);
-
-  --accent: oklch(0.97 0 0);
-
-  --accent-foreground: oklch(0.205 0 0);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
+  /* Consumed by the base layer (border-border / outline-ring) */
   --border: oklch(0.922 0 0);
-
-  --input: oklch(0.922 0 0);
-
   --ring: oklch(0.708 0 0);
-
-  --chart-1: oklch(0.646 0.222 41.116);
-
-  --chart-2: oklch(0.6 0.118 184.704);
-
-  --chart-3: oklch(0.398 0.07 227.392);
-
-  --chart-4: oklch(0.828 0.189 84.429);
-
-  --chart-5: oklch(0.769 0.188 70.08);
-
-  --sidebar: oklch(0.985 0 0);
-
-  --sidebar-foreground: oklch(0.145 0 0);
-
-  --sidebar-primary: oklch(0.205 0 0);
-
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-
-  --sidebar-accent: oklch(0.97 0 0);
-
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-
-  --sidebar-border: oklch(0.922 0 0);
-
-  --sidebar-ring: oklch(0.708 0 0);
 }
 
 /* -------------------------------------------------------
@@ -85,48 +26,23 @@
    This exposes CSS vars as Tailwind colors/fonts
 ------------------------------------------------------- */
 @theme inline {
-  /* Colors */
+  /* Brand color tokens */
   --color-void: var(--bg-void);
   --color-bone: var(--text-bone);
   --color-rust: var(--accent-rust);
   --color-fog: var(--accent-fog);
+  --color-signature: var(--accent-signature);
 
   /* Fonts (from next/font variables) */
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-geist-sans);
   --font-aoboshi: var(--font-aoboshi);
   --font-wind-song: var(--font-wind-song);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
+
+  /* Consumed by the base layer */
   --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
+  --color-ring: var(--ring);
+
+  /* Radius scale */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -144,8 +60,7 @@
    Base Styles
 ------------------------------------------------------- */
 body {
-  background-color: var(--background);
-  font-family: var(--font-serif), serif;
+  font-family: var(--font-sans), sans-serif;
 }
 
 /* -------------------------------------------------------
@@ -166,46 +81,24 @@ body::-webkit-scrollbar:horizontal {
   display: initial;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-black text-white;
+  }
+
+  /* Visible keyboard focus for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--color-signature);
+    outline-offset: 2px;
   }
 
   /* @media (pointer: fine) {
@@ -238,4 +131,279 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* -------------------------------------------------------
+   Brutalist variant — activated via [data-design="brutal"]
+   Paper canvas, ink borders, hard offset shadows, acid accent.
+------------------------------------------------------- */
+[data-design="brutal"] {
+  --bru-paper: #f3f1e9;
+  --bru-ink: #0a0a0a;
+  --bru-accent: #ffd400;
+  --bru-shadow: #0a0a0a;
+  /* recolor the emerald "signature" utilities site-wide */
+  --accent-signature: #2b5fff;
+}
+
+/* Canvas */
+[data-design="brutal"] body {
+  background: var(--bru-paper);
+  color: var(--bru-ink);
+  font-family: var(--font-bricolage), sans-serif;
+}
+
+/* Repaint dark surfaces to paper */
+[data-design="brutal"] .bg-black,
+[data-design="brutal"] .bg-zinc-950,
+[data-design="brutal"] .bg-zinc-900 {
+  background-color: var(--bru-paper) !important;
+}
+
+/* Translucent / panel surfaces become solid paper (cream) to match the canvas */
+[data-design="brutal"] .bg-zinc-950\/50,
+[data-design="brutal"] .bg-zinc-800,
+[data-design="brutal"] .bg-zinc-700,
+[data-design="brutal"] .bg-white\/5,
+[data-design="brutal"] .bg-white\/10,
+[data-design="brutal"] .bg-white\/\[0\.02\],
+[data-design="brutal"] .bg-white\/\[0\.03\],
+[data-design="brutal"] .bg-white\/\[0\.05\] {
+  background-color: var(--bru-paper) !important;
+  backdrop-filter: none !important;
+}
+
+/* Fun overlays (terminal, command palette, emote tray, achievement toasts)
+   become paper panels to match the brutalist canvas. */
+[data-design="brutal"] [data-fun-surface] {
+  background-color: var(--bru-paper) !important;
+  backdrop-filter: none !important;
+}
+
+/* Brutal: only the outer fun panel keeps the ink frame — strip the heavy
+   border + hard shadow from inner buttons so the command-palette list and the
+   emote grid don't turn into a stack of boxes. */
+[data-design="brutal"] [data-fun-surface] button {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Header/footer dividers stay single 2px lines. The broad brutal border rule
+   (.border-white/10 -> border-width: 2px on all sides) otherwise turns a
+   border-b / border-t into a full box that doubles up against the panel frame,
+   making the border look inconsistent at the corners. */
+[data-design="brutal"] [data-fun-surface] .border-b {
+  border-width: 0 0 2px 0 !important;
+}
+[data-design="brutal"] [data-fun-surface] .border-t {
+  border-width: 2px 0 0 0 !important;
+}
+
+/* Dock buttons: visible hover color + brutalist press (sink toward the hard
+   shadow). In brutal, hover:bg-white/10 is ~invisible on the paper buttons. */
+[data-design="brutal"] .fun-dock-btn:hover {
+  background-color: var(--bru-accent) !important;
+  box-shadow: 3px 3px 0 var(--bru-ink) !important;
+}
+
+/* Directional dividers stay single lines in brutal. The broad border rule
+   (.border-white/x -> border-width: 2px on all sides) otherwise expands a
+   border-t/b/l/r into a full 2px box (e.g. the career card bullets ended up
+   wrapped in a box with no padding). Exclude full-border (.border) frames. */
+[data-design="brutal"] .border-t:not(.border) {
+  border-width: 2px 0 0 0 !important;
+}
+[data-design="brutal"] .border-b:not(.border) {
+  border-width: 0 0 2px 0 !important;
+}
+[data-design="brutal"] .border-l:not(.border) {
+  border-width: 0 0 0 2px !important;
+}
+[data-design="brutal"] .border-r:not(.border) {
+  border-width: 0 2px 0 0 !important;
+}
+
+/* Decorative ambient glow becomes a solid-white blob in brutal (the bg-white
+   repaint hits it); hide it on the flat paper canvas. */
+[data-design="brutal"] .ambient-glow {
+  display: none !important;
+}
+
+/* Selection: warm yellow accent with ink text — on-theme and far lighter than
+   a solid black bar. */
+[data-design="brutal"] [data-fun-surface] button[data-active="true"] {
+  background-color: var(--bru-accent) !important;
+  color: var(--bru-ink) !important;
+}
+[data-design="brutal"] [data-fun-surface] button[data-active="true"] * {
+  color: var(--bru-ink) !important;
+}
+
+/* Slim, themed scrollbar for fun overlay scroll areas (command-palette list,
+   terminal). The rest of the site hides scrollbars, so the default chunky bar
+   looked out of place / "stuck out" of the panel. */
+.fun-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+.fun-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.fun-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.fun-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.22);
+  border-radius: 9999px;
+}
+[data-design="brutal"] .fun-scroll {
+  scrollbar-color: var(--bru-ink) transparent;
+}
+[data-design="brutal"] .fun-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--bru-ink);
+}
+
+/* Ink text */
+[data-design="brutal"] .text-white,
+[data-design="brutal"] .text-gray-100,
+[data-design="brutal"] .text-gray-200,
+[data-design="brutal"] .text-gray-400,
+[data-design="brutal"] .text-zinc-100,
+[data-design="brutal"] .text-zinc-200,
+[data-design="brutal"] .text-zinc-300,
+[data-design="brutal"] .text-zinc-400,
+[data-design="brutal"] .text-zinc-500,
+[data-design="brutal"] .text-zinc-600,
+[data-design="brutal"] .text-neutral-300 {
+  color: var(--bru-ink) !important;
+}
+
+/* Solidify gradient / clipped text */
+[data-design="brutal"] .text-transparent {
+  color: var(--bru-ink) !important;
+  -webkit-text-fill-color: var(--bru-ink) !important;
+}
+[data-design="brutal"] .bg-clip-text {
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+}
+
+/* Square every corner */
+[data-design="brutal"] * {
+  border-radius: 0 !important;
+}
+
+/* Borders → thick ink */
+[data-design="brutal"] .border-white\/10,
+[data-design="brutal"] .border-white\/15,
+[data-design="brutal"] .border-white\/\[0\.06\],
+[data-design="brutal"] .border-white\/\[0\.08\],
+[data-design="brutal"] .border-zinc-700\/50,
+[data-design="brutal"] .border-zinc-800 {
+  border-color: var(--bru-ink) !important;
+  border-width: 2px !important;
+}
+[data-design="brutal"] .ring-1,
+[data-design="brutal"] .ring-white\/10,
+[data-design="brutal"] .ring-white\/25 {
+  --tw-ring-color: var(--bru-ink) !important;
+}
+
+/* Hard offset shadows + ink frame on boxes */
+[data-design="brutal"] .rounded-md,
+[data-design="brutal"] .rounded-lg,
+[data-design="brutal"] .rounded-xl,
+[data-design="brutal"] .rounded-2xl,
+[data-design="brutal"] .rounded-3xl,
+[data-design="brutal"] nav,
+[data-design="brutal"] button.rounded-full,
+[data-design="brutal"] .design-toggle {
+  border: 2px solid var(--bru-ink) !important;
+  box-shadow: 5px 5px 0 var(--bru-shadow) !important;
+}
+
+/* Headings — heavy grotesque uppercase */
+[data-design="brutal"] .font-wind-song {
+  font-family: var(--font-bricolage), sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  font-weight: 800 !important;
+  color: var(--bru-ink) !important;
+}
+[data-design="brutal"] h1 {
+  font-family: var(--font-bricolage), sans-serif !important;
+  font-weight: 800 !important;
+  color: var(--bru-ink) !important;
+}
+
+/* Strokes follow ink */
+[data-design="brutal"] .stroke-white {
+  stroke: var(--bru-ink) !important;
+}
+
+/* Nav bar canvas */
+[data-design="brutal"] nav {
+  background: var(--bru-paper) !important;
+}
+
+/* Section eyebrow number → loud accent block */
+[data-design="brutal"] .section-index {
+  background: var(--bru-accent);
+  color: var(--bru-ink) !important;
+  border: 2px solid var(--bru-ink);
+  padding: 0 0.4rem;
+  box-shadow: 3px 3px 0 var(--bru-shadow);
+}
+
+/* Tags, badges & nav pill → accent boxes */
+[data-design="brutal"] .rounded-full.bg-white\/\[0\.08\],
+[data-design="brutal"] .rounded-full.bg-white\/10 {
+  background: var(--bru-accent) !important;
+  color: var(--bru-ink) !important;
+  border: 2px solid var(--bru-ink) !important;
+  box-shadow: 2px 2px 0 var(--bru-shadow) !important;
+}
+
+/* Toggle in brutal mode */
+[data-design="brutal"] .design-toggle {
+  background: var(--bru-accent) !important;
+}
+[data-design="brutal"] .design-toggle-knob {
+  background: var(--bru-ink) !important;
+}
+/* Toggle letters: R sits on the yellow track (ink), B sits on the black
+   knob (paper) — colour each for contrast instead of hiding them. */
+[data-design="brutal"] .design-toggle > span > span:first-child {
+  color: var(--bru-ink) !important;
+}
+[data-design="brutal"] .design-toggle > span > span:last-child {
+  color: var(--bru-paper) !important;
+}
+
+/* Marquee / meme edge fades — drop the soft black gradients on paper */
+[data-design="brutal"] .skills-edge-fade,
+[data-design="brutal"] .meme-edge-fade {
+  display: none !important;
+}
+
+/* Career logo tile — keep it ink so the white logo mark stays visible */
+[data-design="brutal"] .career-logo-tile {
+  background: var(--bru-ink) !important;
+}
+
+/* Footer giant name — mix-blend-difference turns solid black on paper and
+   hides the copyright text on top. Make it a faint paper-tone watermark. */
+[data-design="brutal"] h1.footer-watermark {
+  mix-blend-mode: normal !important;
+  color: rgba(10, 10, 10, 0.06) !important;
+}
+
+/* Tech highlights — drop the per-word underlines (they read as a stray
+   dotted line); distinguish highlighted words with weight instead. */
+[data-design="brutal"] .tech-underline {
+  display: none !important;
+}
+[data-design="brutal"] .tech-word {
+  font-weight: 800 !important;
 }
