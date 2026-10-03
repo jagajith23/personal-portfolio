@@ -13,6 +13,7 @@ import Image from "next/image";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { useState } from "react";
 import CompanyMark, { XOME } from "./company-mark";
+import HeroDoodle from "./hero-doodle";
 
 const RESUME_URL = "/Jagajith B Software Engineer Resume.pdf";
 
@@ -42,38 +43,43 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-[100dvh] w-full items-center overflow-hidden bg-black px-6 font-aoboshi"
+      className="relative flex min-h-[100dvh] w-full items-center overflow-hidden bg-black px-6 font-aoboshi lg:px-12"
     >
       <div className="ambient-glow pointer-events-none absolute left-1/2 top-1/3 h-80 w-80 -translate-x-1/2 rounded-full bg-signature/5 blur-[140px]" />
 
       <motion.div
-        className="relative mx-auto flex w-full max-w-2xl flex-col gap-7 pb-24 pt-24"
+        className="relative mx-auto grid w-full max-w-2xl items-center gap-x-16 pb-24 pt-24 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_auto]"
         style={{ y: contentY, opacity: contentOpacity }}
         variants={container}
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={reveal} className="w-fit">
-          <TiltAvatar />
-        </motion.div>
+        <div className="flex max-w-2xl flex-col gap-7">
+          <motion.div variants={reveal} className="w-fit">
+            <TiltAvatar />
+          </motion.div>
 
-        <motion.div variants={reveal} className="space-y-4">
-          <p className="font-wind-song text-2xl font-semibold text-zinc-400 md:text-3xl">
-            Hey, I am
-          </p>
-          <h1 className="text-4xl font-semibold tracking-[0.04em] text-zinc-100 md:text-6xl">
-            Jagajith B
-          </h1>
-          <p className="max-w-xl text-pretty text-lg leading-relaxed text-zinc-300 md:text-xl">
-            Software engineer building <Scribble>systems that last</Scribble>.
-            Currently at <CompanyMark {...XOME} />, modernizing the offer and
-            auction platform.
-          </p>
-        </motion.div>
+          <motion.div variants={reveal} className="space-y-4">
+            <p className="font-wind-song text-2xl font-semibold text-zinc-400 md:text-3xl">
+              Hey, I am
+            </p>
+            <h1 className="text-4xl font-semibold tracking-[0.04em] text-zinc-100 md:text-6xl">
+              Jagajith B
+            </h1>
+            <p className="max-w-xl text-pretty text-lg leading-relaxed text-zinc-300 md:text-xl">
+              Software engineer building <Scribble>systems that last</Scribble>.
+              Currently at <CompanyMark {...XOME} />, modernizing the offer and
+              auction platform.
+            </p>
+          </motion.div>
 
-        <motion.div variants={reveal} className="pt-1 text-base md:text-lg">
-          <ResumeLink />
-        </motion.div>
+          <motion.div variants={reveal} className="pt-1 text-base md:text-lg">
+            <ResumeLink />
+          </motion.div>
+        </div>
+
+        {/* Desktop only: the single column stays as it was on small screens. */}
+        <HeroDoodle className="hidden w-[26rem] lg:block xl:w-[30rem]" />
       </motion.div>
     </section>
   );
