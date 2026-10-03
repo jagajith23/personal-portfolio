@@ -27,6 +27,7 @@ const tracks = [
   { title: "Can't Help Falling in Love", artist: "Elvis Presley" },
   { title: "The Winner Takes It All", artist: "ABBA" },
   { title: "Forever", artist: "Chris Brown" },
+  { title: "Sign of the Times", artist: "Harry Styles" },
 ].map((track) => ({
   ...track,
   searchQuery: `${track.artist} ${track.title}`,

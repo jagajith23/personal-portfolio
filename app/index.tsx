@@ -15,16 +15,22 @@ import FunZone from "@/components/fun/fun-zone";
 
 const Index = () => {
     useEffect(() => {
+        // Smooth scroll is decoration; native scrolling for reduced motion.
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+            return;
+
         const lenis = new Lenis();
+        let frame = 0;
 
         const raf = (time: number) => {
             lenis.raf(time);
-            requestAnimationFrame(raf);
+            frame = requestAnimationFrame(raf);
         };
 
-        requestAnimationFrame(raf);
+        frame = requestAnimationFrame(raf);
 
         return () => {
+            cancelAnimationFrame(frame);
             lenis.destroy();
         };
     }, []);

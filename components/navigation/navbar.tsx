@@ -20,30 +20,24 @@ const Navbar = () => {
         { id: "contact", label: "Contact" },
     ];
 
+    // A section is "active" while it crosses a thin band 40% down the
+    // viewport (same trigger line as before), observed instead of polled.
     useEffect(() => {
-        const sections = links.map((l) => document.getElementById(l.id));
-
-        const onScroll = () => {
-            const scrollY = window.scrollY + window.innerHeight * 0.4;
-
-            for (const section of sections) {
-                if (!section) continue;
-
-                const { top, bottom } = section.getBoundingClientRect();
-                const offsetTop = top + window.scrollY;
-                const offsetBottom = bottom + window.scrollY;
-
-                if (scrollY >= offsetTop && scrollY < offsetBottom) {
-                    setActiveTab(section.id);
-                    break;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) setActiveTab(entry.target.id);
                 }
-            }
-        };
+            },
+            { rootMargin: "-40% 0px -59% 0px" },
+        );
 
-        window.addEventListener("scroll", onScroll, { passive: true });
-        onScroll();
+        for (const link of links) {
+            const el = document.getElementById(link.id);
+            if (el) observer.observe(el);
+        }
 
-        return () => window.removeEventListener("scroll", onScroll);
+        return () => observer.disconnect();
     }, []);
 
     return (
@@ -72,6 +66,7 @@ const Navbar = () => {
                         smoothScrollTo("body");
                     }}
                     className="
+            nav-logo
             hidden sm:block
             cursor-pointer
             pr-2 pb-1 text-lg 

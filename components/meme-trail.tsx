@@ -92,12 +92,11 @@ export default function MemeTrail() {
     };
 
     return (
-        <section className="hidden md:block relative w-full bg-black py-32 overflow-hidden font-aoboshi">
+        <section id="after-hours" className="hidden md:block relative w-full bg-black py-16 md:py-24 overflow-hidden font-aoboshi">
             <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 relative z-10">
                 <SectionHeading
-                    index="05"
                     title="After Hours"
-                    subtitle="Try moving your cursor around"
+                    subtitle="Move your cursor around."
                     className="mb-0"
                 />
             </div>
@@ -164,7 +163,7 @@ export default function MemeTrail() {
                         >
                             <img
                                 src={item.img}
-                                alt="meme"
+                                alt=""
                                 className="w-full h-auto object-cover"
                             />
                         </motion.div>

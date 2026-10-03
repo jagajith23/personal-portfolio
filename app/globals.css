@@ -2,18 +2,19 @@
 @import "tw-animate-css";
 
 /* -------------------------------------------------------
-   Root Design Tokens — The Derry Aesthetic
+   Root Design Tokens
 ------------------------------------------------------- */
 :root {
-  /* Core colors */
-  --bg-void: #050505;
-  --text-bone: #e5e0d8;
-  --accent-rust: #6b1818;
-  --accent-fog: #3a3a3a;
+  /* Canvas: off-black, never pure #000 */
+  --bg-void: #0a0a0a;
 
-  /* Signature accent — change this single value to re-theme the site */
-  --accent-signature: #10b981;
+  /* Signature accent, change this single value to re-theme the site */
+  --accent-signature: #f2b33d;
 
+  /* Shape rule: interactive controls and tags (nav, pills, buttons) are
+     rounded-full; media, cards and overlay panels are rounded-xl;
+     tooltips/popovers are rounded-lg; small inner chips (kbd, thumbnails)
+     are rounded-md. Brutal mode squares everything. */
   --radius: 0.625rem;
 
   /* Consumed by the base layer (border-border / outline-ring) */
@@ -28,9 +29,10 @@
 @theme inline {
   /* Brand color tokens */
   --color-void: var(--bg-void);
-  --color-bone: var(--text-bone);
-  --color-rust: var(--accent-rust);
-  --color-fog: var(--accent-fog);
+  /* Remap black to the off-black canvas so bg-black / from-black never hit #000 */
+  --color-black: var(--bg-void);
+  /* ...and white to an off-white, never pure #fff */
+  --color-white: #fafafa;
   --color-signature: var(--accent-signature);
 
   /* Fonts (from next/font variables) */
@@ -89,6 +91,15 @@ body::-webkit-scrollbar:horizontal {
     @apply bg-black text-white;
   }
 
+  /* Tailwind v4 preflight resets buttons to the default arrow cursor.
+     Anything clickable should show the pointer. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [role="switch"],
+  [role="tab"] {
+    cursor: pointer;
+  }
+
   /* Visible keyboard focus for all interactive elements */
   a:focus-visible,
   button:focus-visible,
@@ -120,7 +131,7 @@ body {
 }
 
 /* -------------------------------------------------------
-   Reduced Motion — Respect OS accessibility setting
+   Reduced Motion: respect OS accessibility setting
 ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -134,7 +145,7 @@ body {
 }
 
 /* -------------------------------------------------------
-   Brutalist variant — activated via [data-design="brutal"]
+   Brutalist variant, activated via [data-design="brutal"]
    Paper canvas, ink borders, hard offset shadows, acid accent.
 ------------------------------------------------------- */
 [data-design="brutal"] {
@@ -142,7 +153,7 @@ body {
   --bru-ink: #0a0a0a;
   --bru-accent: #ffd400;
   --bru-shadow: #0a0a0a;
-  /* recolor the emerald "signature" utilities site-wide */
+  /* recolor the marigold "signature" utilities site-wide */
   --accent-signature: #2b5fff;
 }
 
@@ -180,7 +191,7 @@ body {
   backdrop-filter: none !important;
 }
 
-/* Brutal: only the outer fun panel keeps the ink frame — strip the heavy
+/* Brutal: only the outer fun panel keeps the ink frame, strip the heavy
    border + hard shadow from inner buttons so the command-palette list and the
    emote grid don't turn into a stack of boxes. */
 [data-design="brutal"] [data-fun-surface] button {
@@ -199,11 +210,35 @@ body {
   border-width: 2px 0 0 0 !important;
 }
 
-/* Dock buttons: visible hover color + brutalist press (sink toward the hard
-   shadow). In brutal, hover:bg-white/10 is ~invisible on the paper buttons. */
-[data-design="brutal"] .fun-dock-btn:hover {
+/* Fun dock: ONE ink frame split into compartments by 2px ink dividers
+   (industrial-brutalist "visible compartmentalization"), instead of three
+   separately framed + shadowed buttons nested inside a framed box. */
+[data-design="brutal"] .fun-dock {
+  gap: 0 !important;
+  padding: 0 !important;
+  background: var(--bru-paper) !important;
+  border: 2px solid var(--bru-ink) !important;
+  box-shadow: 4px 4px 0 var(--bru-shadow) !important;
+  backdrop-filter: none !important;
+}
+[data-design="brutal"] .fun-dock .fun-dock-btn {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--bru-ink);
+}
+[data-design="brutal"] .fun-dock > div + div .fun-dock-btn {
+  border-left: 2px solid var(--bru-ink) !important;
+}
+[data-design="brutal"] .fun-dock .fun-dock-btn:hover {
   background-color: var(--bru-accent) !important;
-  box-shadow: 3px 3px 0 var(--bru-ink) !important;
+}
+[data-design="brutal"] .fun-dock-tip {
+  background: var(--bru-paper) !important;
+  color: var(--bru-ink) !important;
+  border: 2px solid var(--bru-ink) !important;
+  box-shadow: 3px 3px 0 var(--bru-shadow);
 }
 
 /* Directional dividers stay single lines in brutal. The broad border rule
@@ -229,7 +264,7 @@ body {
   display: none !important;
 }
 
-/* Selection: warm yellow accent with ink text — on-theme and far lighter than
+/* Selection: warm yellow accent with ink text, on-theme and far lighter than
    a solid black bar. */
 [data-design="brutal"] [data-fun-surface] button[data-active="true"] {
   background-color: var(--bru-accent) !important;
@@ -317,13 +352,12 @@ body {
 [data-design="brutal"] .rounded-2xl,
 [data-design="brutal"] .rounded-3xl,
 [data-design="brutal"] nav,
-[data-design="brutal"] button.rounded-full,
-[data-design="brutal"] .design-toggle {
+[data-design="brutal"] button.rounded-full {
   border: 2px solid var(--bru-ink) !important;
   box-shadow: 5px 5px 0 var(--bru-shadow) !important;
 }
 
-/* Headings — heavy grotesque uppercase */
+/* Headings, heavy grotesque uppercase */
 [data-design="brutal"] .font-wind-song {
   font-family: var(--font-bricolage), sans-serif !important;
   text-transform: uppercase;
@@ -347,15 +381,6 @@ body {
   background: var(--bru-paper) !important;
 }
 
-/* Section eyebrow number → loud accent block */
-[data-design="brutal"] .section-index {
-  background: var(--bru-accent);
-  color: var(--bru-ink) !important;
-  border: 2px solid var(--bru-ink);
-  padding: 0 0.4rem;
-  box-shadow: 3px 3px 0 var(--bru-shadow);
-}
-
 /* Tags, badges & nav pill → accent boxes */
 [data-design="brutal"] .rounded-full.bg-white\/\[0\.08\],
 [data-design="brutal"] .rounded-full.bg-white\/10 {
@@ -365,45 +390,89 @@ body {
   box-shadow: 2px 2px 0 var(--bru-shadow) !important;
 }
 
-/* Toggle in brutal mode */
-[data-design="brutal"] .design-toggle {
-  background: var(--bru-accent) !important;
+/* Design toggle: a flat diagonal square. The nav already carries the ink
+   frame, so the swatch gets no border, ring or shadow of its own (no box in
+   a box). The label still becomes a paper tag. */
+[data-design="brutal"] .design-toggle-swatch {
+  border: none !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
 }
-[data-design="brutal"] .design-toggle-knob {
-  background: var(--bru-ink) !important;
-}
-/* Toggle letters: R sits on the yellow track (ink), B sits on the black
-   knob (paper) — colour each for contrast instead of hiding them. */
-[data-design="brutal"] .design-toggle > span > span:first-child {
+[data-design="brutal"] .design-toggle-label {
+  background: var(--bru-paper) !important;
   color: var(--bru-ink) !important;
-}
-[data-design="brutal"] .design-toggle > span > span:last-child {
-  color: var(--bru-paper) !important;
+  border: 2px solid var(--bru-ink) !important;
 }
 
-/* Marquee / meme edge fades — drop the soft black gradients on paper */
+/* Marquee / meme edge fades, drop the soft black gradients on paper */
 [data-design="brutal"] .skills-edge-fade,
 [data-design="brutal"] .meme-edge-fade {
   display: none !important;
 }
 
-/* Career logo tile — keep it ink so the white logo mark stays visible */
-[data-design="brutal"] .career-logo-tile {
-  background: var(--bru-ink) !important;
-}
-
-/* Footer giant name — mix-blend-difference turns solid black on paper and
+/* Footer giant name, mix-blend-difference turns solid black on paper and
    hides the copyright text on top. Make it a faint paper-tone watermark. */
-[data-design="brutal"] h1.footer-watermark {
+[data-design="brutal"] .footer-watermark {
   mix-blend-mode: normal !important;
   color: rgba(10, 10, 10, 0.06) !important;
 }
 
-/* Tech highlights — drop the per-word underlines (they read as a stray
-   dotted line); distinguish highlighted words with weight instead. */
-[data-design="brutal"] .tech-underline {
-  display: none !important;
+/* Career tags, flat paper chips with a thin ink outline. */
+[data-design="brutal"] .career-tag {
+  background: var(--bru-paper) !important;
+  color: var(--bru-ink) !important;
+  border: 1.5px solid var(--bru-ink) !important;
 }
-[data-design="brutal"] .tech-word {
-  font-weight: 800 !important;
+
+/* Career entry rail lights up in the accent on hover. */
+[data-design="brutal"] .career-entry:hover {
+  border-color: var(--accent-signature) !important;
+}
+
+/* Hero avatar gets the ink frame instead of the soft ring. */
+[data-design="brutal"] .hero-avatar {
+  border: 2px solid var(--bru-ink);
+  box-shadow: 5px 5px 0 var(--bru-shadow);
+}
+
+/* Career hierarchy in brutal. The broad ink repaint flattens every grey to
+   solid ink, so role / summary / date lost their levels. Re-establish them:
+   heavy role title, softened summary, quiet date. */
+[data-design="brutal"] .career-role {
+  color: var(--bru-ink) !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+[data-design="brutal"] .career-summary {
+  color: rgba(10, 10, 10, 0.68) !important;
+}
+[data-design="brutal"] .career-date,
+[data-design="brutal"] .section-heading p {
+  color: rgba(10, 10, 10, 0.55) !important;
+}
+
+/* Nav wordmark: the refined script needs pb-1 for its descending tails, but
+   the brutal uppercase grotesque has none, so that padding lifts it 2px above
+   the nav links. Drop it so both share one centre line. */
+[data-design="brutal"] .nav-logo {
+  padding-bottom: 0 !important;
+  /* All-caps sits high next to mixed-case links: measured ink put its
+     baseline 1px above theirs and its optical centre ~2px above. Nudge it
+     down so the baselines meet. */
+  transform: translateY(1.5px);
+}
+
+/* Mystic playground: the Code / Output divider is an element, so ink it. */
+[data-design="brutal"] .playground-divider {
+  background-color: var(--bru-ink) !important;
+}
+@media (min-width: 1024px) {
+  [data-design="brutal"] .playground-divider {
+    width: 2px;
+  }
+}
+@media (max-width: 1023.98px) {
+  [data-design="brutal"] .playground-divider {
+    height: 2px;
+  }
 }

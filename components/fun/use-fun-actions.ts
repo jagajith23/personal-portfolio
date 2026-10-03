@@ -39,7 +39,7 @@ export function useFunActions(): FunAction[] {
         for (const project of PROJECTS) {
             actions.push({
                 id: `project-${project.id}`,
-                label: `Project — ${project.title}`,
+                label: `Project: ${project.title}`,
                 group: "Projects",
                 keywords: `${project.tag} work ${project.description}`,
                 hint: project.projectUrl ? "Open ↗" : "View",
@@ -60,14 +60,14 @@ export function useFunActions(): FunAction[] {
         actions.push(
             {
                 id: "theme-brutal",
-                label: "Theme — Brutalist mode",
+                label: "Theme: Brutalist mode",
                 group: "Theme",
                 keywords: "design switch toggle brutal",
                 perform: () => setDesign("brutal"),
             },
             {
                 id: "theme-refined",
-                label: "Theme — Refined mode",
+                label: "Theme: Refined mode",
                 group: "Theme",
                 keywords: "design switch toggle refined default",
                 perform: () => setDesign("refined"),

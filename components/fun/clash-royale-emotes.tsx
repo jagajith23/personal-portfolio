@@ -167,7 +167,7 @@ export default function ClashRoyaleEmotes() {
                         }}
                         ref={trayRef}
                         data-fun-surface
-                        className="fixed bottom-24 right-6 z-[66] flex max-w-[calc(100vw-3rem)] flex-wrap items-center justify-end gap-0.5 rounded-2xl border border-white/10 bg-zinc-950/70 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-xl"
+                        className="fixed bottom-24 right-6 z-[66] flex max-w-[calc(100vw-3rem)] flex-wrap items-center justify-end gap-0.5 rounded-xl border border-white/10 bg-zinc-950/70 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-xl"
                     >
                         {EMOTES.map((emote) => (
                             <button

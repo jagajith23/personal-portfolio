@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { Pause, Play, SkipBack, SkipForward } from "@phosphor-icons/react";
 
 type Song = {
     title: string;
@@ -34,7 +35,7 @@ export default function MusicWidget() {
                     throw new Error("No tracks found");
                 }
 
-                const promises = spotifyData.tracks.map(async (track: any) => {
+                const promises = spotifyData.tracks.map(async (track: { searchQuery: string }) => {
                     try {
                         const res = await fetch(
                             `https://itunes.apple.com/search?term=${encodeURIComponent(
@@ -289,25 +290,17 @@ function AnimatedBars() {
 }
 
 const PlayIcon = ({ className }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path d="M8 5v14l11-7z" />
-    </svg>
+    <Play weight="fill" aria-hidden className={className} />
 );
 
 const PauseIcon = ({ className }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-    </svg>
+    <Pause weight="fill" aria-hidden className={className} />
 );
 
 const NextIcon = ({ className }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
-    </svg>
+    <SkipForward weight="fill" aria-hidden className={className} />
 );
 
 const PrevIcon = ({ className }: { className?: string }) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
-    </svg>
+    <SkipBack weight="fill" aria-hidden className={className} />
 );

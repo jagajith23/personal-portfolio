@@ -9,8 +9,7 @@ A single-page, animation-driven personal portfolio for Jagajith B (Software Engi
 - **Styling:** Tailwind CSS v4
 - **Animation:** Framer Motion
 - **Smooth scroll:** Lenis (`@studio-freight/lenis`)
-- **3D / WebGL:** Three.js
-- **Icons:** svgl-react, lucide-react
+- **Icons:** svgl-react (tech logos), Phosphor (UI icons)
 
 ## Getting Started
 

@@ -51,7 +51,7 @@ export const SKILLS = [
 ];
 
 export const BIO = [
-    "Jagajith — Software Engineer & full-stack web developer.",
+    "Jagajith, software engineer & full-stack web developer.",
     "I build end-to-end products and love systems, side projects",
     "and the occasional rabbit hole (I built my own programming",
     "language, Mystic). Currently a SWE working on large-scale",

@@ -1,12 +1,21 @@
-import { Nextjs } from "@ridemountainpig/svgl-react";
-
 type ProjectTag = "Freelance" | "Side Project" | "Internal";
+
+export type ProjectVideo = {
+  mp4: string;
+  webm: string;
+  poster: string;
+};
 
 export type Project = {
   id: number;
   title: string;
   description: string;
+  /** Static cover; also used for Open Graph. With a video, use its poster. */
   imageUrl: string;
+  /** Optional muted looping clip shown in place of the image. */
+  video?: ProjectVideo;
+  /** Optional in-browser demo rendered on the project page. */
+  playground?: "mystic";
   projectUrl?: string;
   isInternal?: boolean;
   tag: ProjectTag;
@@ -28,9 +37,13 @@ export const PROJECTS: Project[] = [
     id: 1,
     title: "Riders Management System",
     description:
-      "Freelanced a end-to-end web app for managing riders, analytics, dashboards, etc.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1765211003001-b9eb5cbfe1f3?q=80&w=600&auto=format&fit=crop",
+      "Freelanced an end-to-end web app for managing riders, analytics, dashboards, etc.",
+    imageUrl: "/projects/portfolio-riders-poster.jpg",
+    video: {
+      mp4: "/projects/portfolio-riders.mp4",
+      webm: "/projects/portfolio-riders.webm",
+      poster: "/projects/portfolio-riders-poster.jpg",
+    },
     projectUrl: "https://qa-web-admin.captainasadgroupofcompanies.com/",
     tag: "Freelance",
     details: {
@@ -141,10 +154,15 @@ export const PROJECTS: Project[] = [
     id: 4,
     title: "Mystic",
     description:
-      "A programming language in Java and Python, including tokenizer, parser, etc.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1767257147725-89011434e351?q=80&w=600&auto=format&fit=crop",
+      "A small programming language with closures, implemented twice: in Java and in Python.",
+    imageUrl: "/projects/mystic-playground-poster.jpg",
+    video: {
+      mp4: "/projects/mystic-playground.mp4",
+      webm: "/projects/mystic-playground.webm",
+      poster: "/projects/mystic-playground-poster.jpg",
+    },
     projectUrl: "https://github.com/jagajith23/mystic",
+    playground: "mystic",
     tag: "Side Project",
     details: {
       techStack: [
@@ -152,13 +170,8 @@ export const PROJECTS: Project[] = [
         { name: "Python", icon: "python" },
         { name: "Git", icon: "git" },
       ],
-      detailedDescription: `
-        Mystic is a custom programming language designed to explore compiler and interpreter internals.
-
-        The language is implemented using a hand-written tokenizer and recursive descent parser that constructs an Abstract Syntax Tree (AST) for evaluation. Current features include variable declarations, conditional logic, looping constructs, and user-defined functions with scoped environments.
-
-        The interpreter is implemented in Java, while a Python-based shell provides an interactive execution layer. Developing Mystic provided deep insight into parsing theory, AST evaluation, function call stacks, scope resolution, and execution flow across language boundaries.
-      `,
+      detailedDescription:
+        "## Overview\n\nMystic is a small, dynamically typed programming language I built to understand how interpreters work. I started from the design in Crafting Interpreters and wrote the whole pipeline by hand, twice: once in Java and once in Python.\n\n## How it works\n\nSource code passes through a scanner, a recursive descent parser that builds a syntax tree, a resolver that binds each variable to its scope before the program runs, and a tree-walking interpreter. The resolver is what lets closures capture the right variable.\n\n## What I added\n\nOn top of the base design I added break and continue (checked before the program runs), a ternary operator, string and number concatenation, and a division-by-zero error. Both implementations run the same example programs in CI and must print identical output.",
     },
   },
   {
@@ -238,13 +251,3 @@ export const DURATION = 1.2;
 export const DELAY = 0.4;
 export const EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
 
-export const hoverColors = [
-  "text-purple-400",
-  "text-emerald-400",
-  "text-pink-400",
-  "text-blue-400",
-  "text-indigo-400",
-  "text-cyan-400",
-  "text-amber-400",
-  "text-rose-400",
-];

@@ -1,4 +1,10 @@
-import { useMotionValue, useSpring, motion } from "framer-motion";
+import {
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  motion,
+} from "framer-motion";
+import { ArrowUpRight } from "@phosphor-icons/react";
 import { useRef } from "react";
 
 type ArrowDirection =
@@ -12,6 +18,7 @@ type ArrowDirection =
 interface MagneticButtonProps {
   onClick: (e?: React.MouseEvent) => void;
   title?: string;
+  ariaLabel?: string;
   size?: "sm" | "md" | "lg";
   arrowHoverDirection?: ArrowDirection;
   arrowDirection?: ArrowDirection;
@@ -20,11 +27,13 @@ interface MagneticButtonProps {
 export default function MagneticButton({
   onClick,
   title,
+  ariaLabel,
   size = "md",
   arrowHoverDirection = "south-east",
   arrowDirection = "north-east",
 }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement>(null);
+  const reduce = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -33,7 +42,7 @@ export default function MagneticButton({
   const ySpring = useSpring(y, springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!ref.current) return;
+    if (reduce || !ref.current) return;
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current.getBoundingClientRect();
     x.set((clientX - (left + width / 2)) * 0.5);
@@ -60,12 +69,13 @@ export default function MagneticButton({
     south: 135,
   };
 
-  const arrowSize = title ? "w-3 h-3" : "w-5 h-5";
+  const arrowSize = title ? 12 : 20;
 
   return (
     <motion.button
       ref={ref}
       onClick={onClick}
+      aria-label={ariaLabel}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: xSpring, y: ySpring }}
@@ -83,23 +93,16 @@ export default function MagneticButton({
           </span>
         )}
 
-        <motion.svg
-          viewBox="0 0 24 24"
-          fill="none"
-          className={`stroke-white ${arrowSize} transition-colors duration-500 group-hover:stroke-black`}
+        <motion.span
+          className="inline-flex text-white transition-colors duration-500 group-hover:text-black"
           variants={{
             initial: { rotate: rotationMap[arrowDirection] },
             hover: { rotate: rotationMap[arrowHoverDirection] },
           }}
           transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
         >
-          <path
-            d="M7 17L17 7M17 7H7M17 7V17"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </motion.svg>
+          <ArrowUpRight size={arrowSize} weight="bold" aria-hidden />
+        </motion.span>
       </motion.div>
     </motion.button>
   );

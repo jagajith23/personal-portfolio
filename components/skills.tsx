@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  AnimatePresence,
   motion,
   useScroll,
   useSpring,
@@ -14,6 +15,7 @@ import {
 import { Fragment, useEffect, useRef, useState } from "react";
 import SectionHeading from "./section-heading";
 import {
+  ClaudeAI,
   CSharp,
   CSS,
   Dart,
@@ -26,6 +28,7 @@ import {
   FramerDark,
   FramerLight,
   Git,
+  GitHubCopilotDark,
   HTML5,
   Java,
   JavaScript,
@@ -76,6 +79,8 @@ const ROW_2 = [
   { name: "HTML5", icon: "html", color: "#E34F26" },
   { name: "Sass", icon: "sass", color: "#1572B6" },
   { name: "TanStack", icon: "tanstack", color: "#1572B6" },
+  { name: "Claude Code", icon: "claude", color: "#D97757" },
+  { name: "GitHub Copilot", icon: "copilot", color: "#FFFFFF" },
 ];
 
 const ROW_3 = [
@@ -93,7 +98,98 @@ const ROW_3 = [
   { name: "Socket.io", icon: "socket", color: "#010101" },
 ];
 
+type Skill = (typeof ROW_1)[number];
+
+// The static "see all" view regroups every marquee skill by area.
+const ALL_SKILLS: Skill[] = [...ROW_1, ...ROW_2, ...ROW_3];
+const byName = new Map(ALL_SKILLS.map((s) => [s.name, s]));
+const GROUPS = [
+  {
+    label: "Languages",
+    names: [
+      "TypeScript",
+      "JavaScript",
+      "C#",
+      "Python",
+      "Java",
+      "Dart",
+      "HTML5",
+      "Sass",
+    ],
+  },
+  {
+    label: "Backend",
+    names: [
+      ".NET Core",
+      "Node.js",
+      "Express",
+      "Flask",
+      "SignalR",
+      "RabbitMQ",
+      "Socket.io",
+    ],
+  },
+  {
+    label: "Frontend",
+    names: [
+      "React",
+      "Next.js",
+      "Ember.js",
+      "TanStack",
+      "Tailwind",
+      "Framer",
+      "Flutter",
+    ],
+  },
+  {
+    label: "Data",
+    names: ["PostgreSQL", "SQL Server", "MongoDB", "MariaDB", "Redis"],
+  },
+  {
+    label: "Cloud & DevOps",
+    names: ["Azure", "Docker", "Kubernetes", "Git", "Linux", "Nginx"],
+  },
+  {
+    label: "AI tools",
+    names: ["Claude Code", "GitHub Copilot"],
+  },
+].map((g) => ({
+  label: g.label,
+  skills: g.names.map((n) => byName.get(n)).filter((s): s is Skill => !!s),
+}));
+
+const EASE = [0.23, 1, 0.32, 1] as const;
+// Emil's on-screen movement curve: used for the section-height morph.
+const EASE_IN_OUT = [0.77, 0, 0.175, 1] as const;
+
+// Both views stay mounted and cross-fade over each other. Nothing mounts or
+// unmounts on toggle (no React commit hitch) and the paused marquee keeps its
+// scroll position instead of snapping back to the start.
+const CROSSFADE = { duration: 0.3, ease: EASE };
+
+/** Tracks an element's rendered height so a wrapper can animate to it. */
+function useMeasuredHeight<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [height, setHeight] = useState<number | "auto">("auto");
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) =>
+      setHeight(entry.borderBoxSize?.[0]?.blockSize ?? el.offsetHeight),
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return [ref, height] as const;
+}
+
 export default function SkillsVelocity() {
+  const [showAll, setShowAll] = useState(false);
+  const [marqueeRef, marqueeHeight] = useMeasuredHeight<HTMLDivElement>();
+  const [gridRef, gridHeight] = useMeasuredHeight<HTMLDivElement>();
+  const height = showAll ? gridHeight : marqueeHeight;
+  const label = showAll ? "Show less" : `See all ${ALL_SKILLS.length}`;
+
   return (
     <section
       id="skills"
@@ -112,44 +208,194 @@ export default function SkillsVelocity() {
         justify-center
       "
     >
-      <div className="skills-edge-fade absolute inset-y-0 left-0 w-32 bg-linear-to-r from-black to-transparent z-10 pointer-events-none" />
-      <div className="skills-edge-fade absolute inset-y-0 right-0 w-32 bg-linear-to-l from-black to-transparent z-10 pointer-events-none" />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none"
+        animate={{ opacity: showAll ? 0 : 1 }}
+        transition={CROSSFADE}
+      >
+        <div className="skills-edge-fade absolute inset-y-0 left-0 w-32 bg-linear-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="skills-edge-fade absolute inset-y-0 right-0 w-32 bg-linear-to-l from-black to-transparent z-10 pointer-events-none" />
+      </motion.div>
 
       <div className="relative z-0 flex flex-col h-full gap-8 md:gap-16">
-        <SectionHeading
-          index="04"
-          title="Skills"
-          className="px-6 md:px-12 mb-4"
-        />
+        <div className="relative z-20 mb-4 flex items-end justify-between gap-6 px-6 md:px-12">
+          <SectionHeading title="Skills" className="mb-0" />
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            aria-expanded={showAll}
+            aria-controls="skills-content"
+            className="group mb-2 inline-flex shrink-0 items-baseline gap-1 text-sm text-zinc-300 md:text-base"
+          >
+            <span className="relative inline-grid">
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.span
+                  key={label}
+                  className="col-start-1 row-start-1 whitespace-nowrap"
+                  initial={{ opacity: 0, y: 6, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -6, filter: "blur(4px)" }}
+                  transition={{ duration: 0.2, ease: EASE }}
+                >
+                  {label}
+                </motion.span>
+              </AnimatePresence>
+              <span
+                aria-hidden
+                className="absolute -bottom-0.5 left-0 h-px w-full bg-zinc-600 transition-colors duration-200 ease-out group-hover:bg-signature"
+              />
+            </span>
+          </button>
+        </div>
 
-        <ParallaxText baseVelocity={-0.7}>
-          {ROW_1.map((skill, i) => (
-            <SkillItem key={i} data={skill} />
-          ))}
-        </ParallaxText>
+        {/* Both views live here permanently. The active one is in flow; the
+            other is stacked on top (absolute), invisible and inert. The
+            wrapper animates between their measured heights. */}
+        <motion.div
+          id="skills-content"
+          className="relative overflow-hidden"
+          animate={{ height }}
+          transition={{ duration: 0.35, ease: EASE_IN_OUT }}
+        >
+          <motion.div
+            ref={marqueeRef}
+            aria-hidden={showAll}
+            inert={showAll}
+            className={`flex flex-col gap-8 py-3 md:gap-16 ${
+              showAll
+                ? "pointer-events-none absolute inset-x-0 top-0"
+                : "relative"
+            }`}
+            initial={false}
+            animate={showAll ? "hidden" : "show"}
+            variants={{
+              hidden: { opacity: 0, transition: CROSSFADE },
+              show: {
+                opacity: 1,
+                transition: { ...CROSSFADE, staggerChildren: 0.05 },
+              },
+            }}
+          >
+            {[
+              { row: ROW_1, velocity: -0.7 },
+              { row: ROW_2, velocity: 0.7 },
+              { row: ROW_3, velocity: -0.5 },
+            ].map(({ row, velocity }) => (
+              // Each row slides back in from the side it scrolls toward.
+              // Full transform strings keep the slide on the GPU.
+              <motion.div
+                key={velocity + row[0].name}
+                variants={{
+                  hidden: {
+                    transform: `translateX(${velocity < 0 ? 40 : -40}px)`,
+                    transition: CROSSFADE,
+                  },
+                  show: {
+                    transform: "translateX(0px)",
+                    transition: { duration: 0.45, ease: EASE },
+                  },
+                }}
+              >
+                <ParallaxText baseVelocity={velocity} paused={showAll}>
+                  {row.map((skill, i) => (
+                    <SkillItem key={i} data={skill} />
+                  ))}
+                </ParallaxText>
+              </motion.div>
+            ))}
+          </motion.div>
 
-        <ParallaxText baseVelocity={0.7}>
-          {ROW_2.map((skill, i) => (
-            <SkillItem key={i} data={skill} />
-          ))}
-        </ParallaxText>
-
-        <ParallaxText baseVelocity={-0.5}>
-          {ROW_3.map((skill, i) => (
-            <SkillItem key={i} data={skill} />
-          ))}
-        </ParallaxText>
+          <div
+            ref={gridRef}
+            aria-hidden={!showAll}
+            inert={!showAll}
+            className={`py-3 ${
+              showAll
+                ? "relative"
+                : "pointer-events-none absolute inset-x-0 top-0"
+            }`}
+          >
+            <SkillsGrid visible={showAll} />
+          </div>
+        </motion.div>
       </div>
     </section>
+  );
+}
+
+// Opacity + GPU transform only (no filter), animated per group rather than
+// per chip: 6 animated nodes instead of 40+ keeps the entrance smooth.
+const gridGroup = {
+  hidden: {
+    opacity: 0,
+    transform: "translateY(10px)",
+    transition: { duration: 0.2, ease: EASE },
+  },
+  show: {
+    opacity: 1,
+    transform: "translateY(0px)",
+    transition: { duration: 0.35, ease: EASE },
+  },
+};
+
+/** Every skill at once, grouped by area. Groups cascade in 50ms apart. */
+function SkillsGrid({ visible }: { visible: boolean }) {
+  return (
+    <motion.div
+      className="grid gap-x-12 gap-y-12 px-6 sm:grid-cols-2 md:px-12 lg:grid-cols-3"
+      initial={false}
+      animate={visible ? "show" : "hidden"}
+      variants={{
+        // Hide all at once (fast); reveal with a short cascade.
+        hidden: { transition: { staggerChildren: 0 } },
+        show: { transition: { staggerChildren: 0.05 } },
+      }}
+    >
+      {GROUPS.map((group) => (
+        <motion.div key={group.label} variants={gridGroup}>
+          <h3 className="mb-5 text-sm text-zinc-500">
+            {group.label}
+          </h3>
+          <ul className="flex flex-wrap gap-x-6 gap-y-4">
+            {group.skills.map((skill) => (
+              // Same hover as the marquee items (icon grows, name brightens).
+              // On pointer devices the logos rest in greyscale and take their
+              // brand colour on hover; touch devices keep the colour.
+              <li
+                key={skill.name}
+                className="group/skill flex items-center gap-2.5 text-base md:text-lg"
+              >
+                <span
+                  className="skill-grid-icon h-5 w-5 shrink-0 transition-[filter,opacity,transform] duration-300 ease-out group-hover/skill:scale-110 md:h-6 md:w-6 [@media(hover:hover)]:opacity-60 [@media(hover:hover)]:grayscale group-hover/skill:opacity-100 group-hover/skill:grayscale-0"
+                  style={{ color: skill.color }}
+                >
+                  <TechIcon icon={skill.icon} />
+                </span>
+                <span className="text-zinc-300 transition-colors duration-300 ease-out group-hover/skill:text-zinc-100">
+                  {skill.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 }
 
 interface ParallaxProps {
   children: React.ReactNode;
   baseVelocity: number;
+  /** Stops the per-frame loop (and freezes position) while the row is hidden. */
+  paused?: boolean;
 }
 
-function ParallaxText({ children, baseVelocity = 100 }: ParallaxProps) {
+function ParallaxText({
+  children,
+  baseVelocity = 100,
+  paused = false,
+}: ParallaxProps) {
   const baseX = useMotionValue(0);
   const shouldReduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
@@ -166,7 +412,7 @@ function ParallaxText({ children, baseVelocity = 100 }: ParallaxProps) {
   const directionFactor = useRef<number>(1);
 
   useAnimationFrame((t, delta) => {
-    if (shouldReduceMotion) return;
+    if (shouldReduceMotion || paused) return;
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
     if (velocityFactor.get() < 0) {
@@ -233,6 +479,8 @@ function useIsBrutal() {
   return isBrutal;
 }
 
+const MONO_ICONS = new Set(["express", "copilot"]);
+
 export const TechIcon = ({ icon }: { icon: string }) => {
   const isBrutal = useIsBrutal();
   const paths: Record<string, React.ReactNode> = {
@@ -266,6 +514,8 @@ export const TechIcon = ({ icon }: { icon: string }) => {
       </svg>
     ),
     redis: <Redis />,
+    claude: <ClaudeAI />,
+    copilot: <GitHubCopilotDark />,
     signalr: (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
         <defs>
@@ -311,9 +561,15 @@ export const TechIcon = ({ icon }: { icon: string }) => {
   };
 
   const content = paths[icon] || <circle cx="12" cy="12" r="10" />;
+  // svgl's light/dark variant names aren't reliable for these single-colour
+  // marks, so use the white version and invert it on the paper theme.
+  const invert = isBrutal && MONO_ICONS.has(icon);
 
   return (
-    <svg viewBox="0 0 24 24" className="w-full h-full fill-current">
+    <svg
+      viewBox="0 0 24 24"
+      className={`w-full h-full fill-current ${invert ? "invert" : ""}`}
+    >
       {content}
     </svg>
   );

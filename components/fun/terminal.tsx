@@ -44,7 +44,7 @@ function Link({ href, children }: { href: string; children: ReactNode }) {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-emerald-400 underline underline-offset-2 hover:text-emerald-300"
+            className="text-signature underline underline-offset-2 hover:text-zinc-100"
         >
             {children}
         </a>
@@ -80,7 +80,7 @@ export default function Terminal() {
             push(
                 <span className="text-zinc-400">
                     Welcome to Jagajith&apos;s shell. Type{" "}
-                    <span className="text-emerald-400">help</span> to get
+                    <span className="text-signature">help</span> to get
                     started.
                 </span>,
             );
@@ -126,7 +126,7 @@ export default function Terminal() {
         const trimmed = raw.trim();
         push(
             <div className="flex gap-2">
-                <span className="shrink-0 text-emerald-500">{PROMPT}</span>
+                <span className="shrink-0 text-signature">{PROMPT}</span>
                 <span className="text-zinc-200">{raw}</span>
             </div>,
         );
@@ -159,12 +159,12 @@ export default function Terminal() {
                         ].map(([c, d]) => (
                             <Fragment key={c}>
                                 <span>
-                                    <span className="text-emerald-400">
+                                    <span className="text-signature">
                                         {c}
                                     </span>
                                     <span className="text-zinc-500">
                                         {" "}
-                                        — {d}
+                                        - {d}
                                     </span>
                                 </span>
                             </Fragment>
@@ -186,13 +186,13 @@ export default function Terminal() {
                 push(
                     <div className="flex flex-col gap-1">
                         <span className="text-zinc-500">
-                            {PROJECTS.length} projects — type{" "}
-                            <span className="text-emerald-400">open 4</span> to
+                            {PROJECTS.length} projects. Type{" "}
+                            <span className="text-signature">open 4</span> to
                             open one.
                         </span>
                         {PROJECTS.map((p) => (
                             <span key={p.id} className="text-zinc-300">
-                                <span className="text-emerald-500">
+                                <span className="text-signature">
                                     [{p.id}]
                                 </span>{" "}
                                 {p.title}{" "}
@@ -209,7 +209,7 @@ export default function Terminal() {
                     push(
                         <span className="text-rose-400">
                             No project with id “{args[0] ?? ""}”. Try{" "}
-                            <span className="text-emerald-400">projects</span>.
+                            <span className="text-signature">projects</span>.
                         </span>,
                     );
                 } else if (project.projectUrl) {
@@ -269,7 +269,7 @@ export default function Terminal() {
                 push(
                     <span className="text-zinc-300">
                         Reach me at{" "}
-                        <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link> — always
+                        <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link>, always
                         happy to chat.
                     </span>,
                 );
@@ -301,7 +301,7 @@ export default function Terminal() {
                     push(
                         <span className="text-zinc-300">
                             Toggled to {nextMode} mode. (use{" "}
-                            <span className="text-emerald-400">
+                            <span className="text-signature">
                                 design brutal
                             </span>
                             )
@@ -349,14 +349,14 @@ export default function Terminal() {
                 push(
                     <div className="flex flex-col text-zinc-300">
                         <span className="text-zinc-500">
-                            # Mystic — a language I built from scratch
+                            # Mystic: a language I built from scratch
                         </span>
                         <span>
-                            <span className="text-purple-400">fun</span>{" "}
+                            <span className="text-zinc-100 font-semibold">fun</span>{" "}
                             greet(name) {"->"} &quot;Hello, &quot; + name
                         </span>
                         <span>greet(&quot;world&quot;)</span>
-                        <span className="text-emerald-400">
+                        <span className="text-signature">
                             =&gt; &quot;Hello, world&quot;
                         </span>
                         <span className="text-zinc-500">
@@ -382,7 +382,7 @@ export default function Terminal() {
                 push(
                     <span className="text-zinc-300">
                         about projects skills socials resume{" "}
-                        <span className="text-emerald-400">secrets/</span>
+                        <span className="text-signature">secrets/</span>
                     </span>,
                 );
                 break;
@@ -405,7 +405,7 @@ export default function Terminal() {
                 push(
                     <span className="text-rose-400">
                         command not found: {cmd}. Type{" "}
-                        <span className="text-emerald-400">help</span>.
+                        <span className="text-signature">help</span>.
                     </span>,
                 );
         }
@@ -477,7 +477,7 @@ export default function Terminal() {
                             <span className="h-3 w-3 rounded-full bg-amber-400/80" />
                             <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
                             <span className="ml-2 text-xs text-zinc-500">
-                                jagajith — zsh — press ` or esc to close
+                                jagajith: zsh | press ` or esc to close
                             </span>
                         </div>
 
@@ -492,7 +492,7 @@ export default function Terminal() {
                                 </div>
                             ))}
                             <div className="flex gap-2">
-                                <span className="shrink-0 text-emerald-500">
+                                <span className="shrink-0 text-signature">
                                     {PROMPT}
                                 </span>
                                 <input
@@ -503,7 +503,7 @@ export default function Terminal() {
                                     spellCheck={false}
                                     autoComplete="off"
                                     aria-label="terminal input"
-                                    className="w-full bg-transparent text-zinc-100 caret-emerald-400 focus:outline-none"
+                                    className="w-full bg-transparent text-zinc-100 caret-signature focus:outline-none"
                                 />
                             </div>
                         </div>

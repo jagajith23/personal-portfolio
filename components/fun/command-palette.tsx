@@ -143,7 +143,7 @@ export default function CommandPalette() {
                             damping: 32,
                         }}
                         data-fun-surface
-                        className="relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/90 shadow-2xl shadow-black/60 backdrop-blur-xl"
+                        className="relative z-10 w-full max-w-xl overflow-hidden rounded-xl border border-white/10 bg-zinc-950/90 shadow-2xl shadow-black/60 backdrop-blur-xl"
                     >
                         <div className="flex items-center gap-3 border-b border-white/10 px-4">
                             <span className="shrink-0 text-zinc-500">

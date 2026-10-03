@@ -9,14 +9,35 @@ import {
 import Script from "next/script";
 import "./globals.css";
 import MotionProvider from "@/components/motion-provider";
+import {
+    SITE_DESCRIPTION,
+    SITE_NAME,
+    SITE_TITLE,
+    SITE_URL,
+} from "@/lib/site";
 
 export const metadata: Metadata = {
+    metadataBase: new URL(SITE_URL),
     title: {
-        default: "Jagajith – Software Engineer & Web Developer",
+        default: SITE_TITLE,
         template: "%s | Jagajith",
     },
-    description:
-        "Personal portfolio of Jagajith, a software engineer specializing in full-stack web development.",
+    description: SITE_DESCRIPTION,
+    alternates: { canonical: "/" },
+    openGraph: {
+        type: "website",
+        url: "/",
+        siteName: SITE_NAME,
+        title: SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        images: [{ url: "/me-cropped.jpg", alt: "Portrait of Jagajith" }],
+    },
+    twitter: {
+        card: "summary",
+        title: SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        images: ["/me-cropped.jpg"],
+    },
     manifest: "/favicon_io/site.webmanifest",
     icons: {
         icon: [
@@ -55,6 +76,22 @@ const windSong = WindSong({
     variable: "--font-wind-song",
 });
 
+// Person structured data for search results.
+const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Jagajith B",
+    jobTitle: "Software Engineer",
+    url: SITE_URL,
+    image: `${SITE_URL}/me-cropped.jpg`,
+    worksFor: { "@type": "Organization", name: "Xome", url: "https://www.xome.com/" },
+    sameAs: [
+        "https://github.com/jagajith23/",
+        "https://linkedin.com/in/jagajith23/",
+        "https://leetcode.com/u/jagajith23/",
+    ],
+};
+
 const bricolage = Bricolage_Grotesque({
     variable: "--font-bricolage",
     subsets: ["latin"],
@@ -81,9 +118,13 @@ export default function RootLayout({
                 <Script id="design-no-flash" strategy="beforeInteractive">
                     {`try{if(localStorage.getItem('design')==='brutal'){document.documentElement.setAttribute('data-design','brutal')}}catch(e){}`}
                 </Script>
-                {/* <Providers> */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(personJsonLd),
+                    }}
+                />
                 <MotionProvider>{children}</MotionProvider>
-                {/* </Providers> */}
             </body>
         </html>
     );
