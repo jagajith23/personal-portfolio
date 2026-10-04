@@ -138,6 +138,13 @@ export function useFunActions(): FunAction[] {
                 perform: () => fireConfetti(),
             },
             {
+                id: "siu",
+                label: "Hit the SIUUU",
+                group: "Fun",
+                keywords: "celebrate goal football ronaldo cr7 siuuu",
+                perform: () => emitFun("fun:siu"),
+            },
+            {
                 id: "unlock-power-user",
                 label: "Surprise me",
                 group: "Fun",

@@ -5,6 +5,7 @@ import ClashRoyaleEmotes from "./clash-royale-emotes";
 import CommandPalette from "./command-palette";
 import FunDock from "./fun-dock";
 import KonamiCode from "./konami";
+import Siu from "./siu";
 import TabTitle from "./tab-title";
 import Terminal from "./terminal";
 
@@ -21,6 +22,7 @@ export default function FunZone() {
             <ClashRoyaleEmotes />
             <KonamiCode />
             <TabTitle />
+            <Siu />
         </AchievementsProvider>
     );
 }

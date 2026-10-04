@@ -18,6 +18,7 @@ export type AchievementId =
   | "emoter"
   | "night_owl"
   | "loyal"
+  | "siu"
   | "completionist";
 
 type Achievement = {
@@ -64,6 +65,12 @@ const ACHIEVEMENTS: Achievement[] = [
     icon: "🔁",
     title: "Loyal",
     desc: "Came back after leaving",
+  },
+  {
+    id: "siu",
+    icon: "⚽",
+    title: "SIUUU",
+    desc: "Hit the celebration",
   },
   {
     id: "completionist",

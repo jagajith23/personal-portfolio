@@ -27,6 +27,8 @@ const COMMANDS = [
     "goto",
     "emote",
     "confetti",
+    "siu",
+    "thwip",
     "mystic",
     "date",
     "echo",
@@ -154,6 +156,7 @@ export default function Terminal() {
                             ["goto <section>", "scroll the page"],
                             ["emote", "clash royale emotes"],
                             ["confetti", "🎉"],
+                            ["siu", "the celebration"],
                             ["mystic", "my language"],
                             ["clear", "clear screen"],
                         ].map(([c, d]) => (
@@ -176,6 +179,11 @@ export default function Terminal() {
             case "about":
                 push(
                     <div className="flex flex-col text-zinc-300">
+                        {cmd.toLowerCase() === "whoami" && (
+                            <span className="text-signature">
+                                Your friendly neighbourhood developer.
+                            </span>
+                        )}
                         {BIO.map((line, i) => (
                             <span key={i}>{line}</span>
                         ))}
@@ -345,6 +353,21 @@ export default function Terminal() {
                 fireConfetti();
                 push(<span className="text-zinc-300">🎉🎉🎉</span>);
                 break;
+            case "siu":
+            case "siuuu":
+                setOpen(false);
+                emitFun("fun:siu");
+                push(<span className="text-zinc-300">SIUUUUU! ⚽</span>);
+                break;
+            case "thwip":
+                smoothScrollTo("body");
+                setOpen(false);
+                push(
+                    <span className="text-zinc-300">
+                        thwip! Swung back to the top 🕸️
+                    </span>,
+                );
+                break;
             case "mystic":
                 push(
                     <div className="flex flex-col text-zinc-300">
@@ -389,8 +412,9 @@ export default function Terminal() {
             case "sudo":
                 push(
                     <span className="text-rose-400">
-                        Permission denied: nice try 😏 (this incident has been
-                        reported to the King 👑)
+                        Permission denied. With great power comes great
+                        responsibility 🕷️ (this incident has been reported to
+                        the King 👑)
                     </span>,
                 );
                 break;

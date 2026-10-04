@@ -10,7 +10,8 @@ export type FunEventName =
     | "fun:open-terminal"
     | "fun:open-palette"
     | "fun:toggle-emotes"
-    | "fun:confetti";
+    | "fun:confetti"
+    | "fun:siu";
 
 export function emitFun(name: FunEventName, detail?: unknown) {
     if (typeof window === "undefined") return;

@@ -137,7 +137,10 @@ body {
 ------------------------------------------------------- */
 .hero-doodle {
   color: #71717a;
-  transition: color 300ms ease;
+  transition:
+    color 300ms ease,
+    opacity 250ms ease,
+    transform 250ms cubic-bezier(0.23, 1, 0.32, 1);
   /* The shoulders run off the drawing; fade them out instead of a hard cut. */
   -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 99%);
   mask-image: linear-gradient(to bottom, #000 78%, transparent 99%);
@@ -161,6 +164,98 @@ body {
     color: var(--color-signature);
   }
 }
+/* Spider-sense: wavy lines that draw in around the curls when the cursor
+   comes close, then tingle on the spot. */
+.hero-doodle .hero-doodle-sense {
+  transform-box: view-box;
+  transform-origin: 47.7% 24%;
+}
+.hero-doodle .hero-doodle-sense path {
+  stroke: var(--color-signature);
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: none;
+  transition: opacity 150ms ease;
+}
+.hero-doodle .hero-doodle-sense[data-on="true"] {
+  animation: sense-tingle 0.28s steps(1) infinite;
+}
+.hero-doodle .hero-doodle-sense[data-on="true"] path {
+  stroke-dashoffset: 0;
+  opacity: 1;
+  transition:
+    stroke-dashoffset 260ms cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 100ms ease;
+  transition-delay: calc(var(--i) * 28ms);
+}
+@keyframes sense-tingle {
+  0% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+/* The portrait steps aside while its full-body double does the SIUUU. */
+[data-siu-playing] > .hero-doodle {
+  opacity: 0;
+  transform: scale(0.96);
+}
+.siu-stage {
+  --siu-paper: var(--bg-void);
+}
+.siu-stage .siu-fill {
+  fill: var(--siu-paper);
+}
+.siu-stage .siu-number {
+  fill: var(--color-signature);
+  stroke: none;
+}
+.siu-stage .siu-dust path {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transform: translateX(calc(var(--puff, 0) * -14px))
+    scale(calc(1 + var(--puff, 0) * 0.5));
+}
+.siu-stage .siu-dust path + path {
+  transform: translateX(calc(var(--puff, 0) * 14px))
+    scale(calc(1 + var(--puff, 0) * 0.5));
+}
+/* Knock the lettering out of whatever it lands on (it can play over any
+   section when the hero is out of view). */
+.siu-shout {
+  -webkit-text-stroke: 8px var(--siu-paper);
+  paint-order: stroke fill;
+}
+
+/* 404: off-register copies of the number, like a misprinted comic panel.
+   They rest slightly out of place and jolt further for a beat. */
+.multiverse-a {
+  color: var(--color-signature);
+  transform: translate(-0.035em, 0.02em);
+  animation: multiverse-slip 4.5s steps(1) infinite;
+}
+.multiverse-b {
+  color: #3f3f46;
+  transform: translate(0.04em, -0.025em);
+  animation: multiverse-slip 4.5s steps(1) infinite reverse;
+}
+@keyframes multiverse-slip {
+  86% {
+    transform: translate(-0.09em, 0.03em) skewX(-6deg);
+  }
+  89% {
+    transform: translate(0.07em, -0.05em);
+  }
+  92% {
+    transform: translate(-0.02em, 0.06em) skewX(4deg);
+  }
+  95% {
+    transform: translate(-0.035em, 0.02em);
+  }
+}
+
 @keyframes doodle-draw {
   from {
     stroke-dashoffset: 1;
@@ -507,6 +602,13 @@ body {
   [data-design="brutal"] .hero-doodle:hover {
     color: var(--accent-signature);
   }
+}
+
+[data-design="brutal"] .multiverse-b {
+  color: var(--bru-accent);
+}
+[data-design="brutal"] .siu-stage {
+  --siu-paper: var(--bru-paper);
 }
 
 /* Hero avatar gets the ink frame instead of the soft ring. */
