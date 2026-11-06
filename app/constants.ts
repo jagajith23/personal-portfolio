@@ -200,31 +200,42 @@ export const PROJECTS: Project[] = [
       `,
     },
   },
-  // {
-  //   id: 6,
-  //   title: "Paprika — Butchery Application",
-  //   description:
-  //     "Butchery management application for inventory, orders and processing.",
-  //   imageUrl:
-  //     "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop",
-  //   projectUrl: "https://qa-butchery.captainasadgroupofcompanies.com",
-  //   tag: "Freelance",
-  //   details: {
-  //     role: "Full Stack Developer",
-  //     techStack: [
-  //       { name: "Next.js", icon: "nextjs" },
-  //       { name: "React", icon: "react" },
-  //       { name: "TypeScript", icon: "typescript" },
-  //       { name: "Tailwind", icon: "tailwind" },
-  //       { name: "Node.js", icon: "nodejs" },
-  //       { name: ".NET Core", icon: ".net" },
-  //       { name: "Docker", icon: "docker" },
-  //       { name: "Git", icon: "git" },
-  //     ],
-  //     detailedDescription:
-  //       "## Overview\n\nPaprika is a Butchery Application used to manage inventory, stock-keeping units, order processing, cutting schedules, and reporting for retail butchery operations. The system includes product cataloging, per-cut inventory tracking, batch and lot management, sales and order workflows, and role-based access for butchery staff and managers.\n\n## Local Repositories\n\n- Frontend: /Users/jagajith23/Projects/paprika-frontend\n- Backend / Services: /Users/jagajith23/Projects/PaprikaButchery\n\n## Access\n\nThe QA deployment is available at https://qa-butchery.captainasadgroupofcompanies.com.\n\n## Responsibilities\n\nWorked on the frontend and integration layers, implementing UI for inventory and order workflows, integrating APIs, and ensuring reliable deployments and observability.",
-  //   },
-  // },
+  {
+    id: 6,
+    title: "Paprika Butchery",
+    description:
+      "Freelanced an order and invoice management app for a butchery supplying retail branches.",
+    imageUrl: "/projects/paprika-butchery-poster.jpg",
+    video: {
+      mp4: "/projects/paprika-butchery.mp4",
+      webm: "/projects/paprika-butchery.webm",
+      poster: "/projects/paprika-butchery-poster.jpg",
+    },
+    projectUrl: "https://qa-butchery.captainasadgroupofcompanies.com",
+    tag: "Freelance",
+    details: {
+      role: "Full Stack Developer",
+      techStack: [
+        { name: "Next.js", icon: "nextjs" },
+        { name: "TypeScript", icon: "typescript" },
+        { name: "React", icon: "react" },
+        { name: "Tailwind", icon: "tailwind" },
+        { name: "TanStack Query", icon: "tanstack" },
+        { name: "C#", icon: "csharp" },
+        { name: ".NET Core", icon: ".net" },
+        {
+          name: "Dapper",
+          icon: "dapper",
+          url: "https://api.nuget.org/v3-flatcontainer/dapper/2.1.66/icon",
+        },
+        { name: "MariaDB", icon: "mariadb" },
+        { name: "Docker", icon: "docker" },
+        { name: "Git", icon: "git" },
+      ],
+      detailedDescription:
+        "## Overview\n\nDesigned and built an order and invoice management system for a butchery that supplies companies and their retail branches. Staff raise branch-wise orders from a product catalogue, turn them into invoices, process returns and track operating expenses, while a dashboard summarises orders, companies, items and net revenue at a glance.\n\n## Orders & Invoicing\n\nOrders move through a deliberately simple state machine, Pending to Completed, and completing an order generates its invoice number. Each line carries SKU and supplier SKU, ordered versus received quantity, unit cost and a percentage discount. Money is handled to three decimals (KWD) with fixed rounding rules, so line totals, discounts and refunds always reconcile. Order numbers run in a sequence per branch, and any invoice prints as a clean A4 document or exports as a PDF.\n\n## Returns & Reporting\n\nReturns can only be raised against completed orders, are capped to the stock still returnable, and refund each line at its final per-unit cost. Every return is recorded as its own event and shown in the order ledger as negative rows, so the net total is always visible next to the original invoice. Weekly and monthly reports break sales down by branch with discounts and returns, and export to Excel, alongside an expenses ledger with Excel and PDF export.\n\n## Architecture & Security\n\nThe API is a .NET web service in four clean layers (Domain, Application, Infrastructure, API) using Dapper on MariaDB and FluentValidation for request rules. Authentication uses JWT with BCrypt-hashed passwords and role-based access for administrators, managers and staff. The front end is a Next.js (App Router) and TypeScript app: TanStack Query owns server state, React Hook Form with Zod handles forms, and Tailwind with Radix primitives keeps the dense, table-heavy screens consistent. Structured Serilog logging is shipped to a remote server for diagnostics.\n\n## Deployment\n\nThe API and database run in Docker containers, and the front end is configured per environment for QA and production, so releases can be promoted without code changes.",
+    },
+  },
   // {
   //   id: 6,
   //   title: "Evnzon",
