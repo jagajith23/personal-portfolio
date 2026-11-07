@@ -19,7 +19,12 @@ export default function DesignToggle() {
             role="switch"
             aria-checked={isBrutal}
             aria-label={`Switch to ${label.toLowerCase()}`}
-            onClick={toggle}
+            onClick={(e) => {
+                // detail is 0 for keyboard activation: skip the animation then.
+                if (e.detail === 0) return toggle();
+                const r = e.currentTarget.getBoundingClientRect();
+                toggle({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+            }}
             className="design-toggle group relative grid h-8 w-8 shrink-0 cursor-pointer place-items-center transition-transform duration-150 ease-out active:scale-[0.94]"
         >
             <span

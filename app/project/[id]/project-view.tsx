@@ -4,16 +4,26 @@ import { Project, PROJECTS } from "@/app/constants";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react";
+import { AnimatePresence, motion, Variants } from "framer-motion";
+import { useState } from "react";
+import {
+    ArrowLeft,
+    ArrowRight,
+    ArrowUpRight,
+    CaretDown,
+} from "@phosphor-icons/react";
 import { TechIcon } from "@/components/skills";
 import ProjectMedia from "@/components/project-media";
+import ProjectPlayer from "@/components/project-player";
 
 // Client-only and loaded on demand: only the Mystic page needs it.
 const MysticPlayground = dynamic(
     () => import("@/components/mystic-playground"),
     { ssr: false },
 );
+
+// Stacks this size or smaller use the compact layout.
+const COMPACT_STACK_MAX = 6;
 
 const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -36,11 +46,15 @@ const staggerContainer: Variants = {
 };
 
 export default function ProjectView({ id }: { id: string }) {
+    const [writeUpOpen, setWriteUpOpen] = useState(false);
 
     const currentIndex = PROJECTS.findIndex((p) => p.id === Number(id));
     const project: Project | undefined = PROJECTS[currentIndex];
     const prevProject = PROJECTS[currentIndex - 1];
     const nextProject = PROJECTS[currentIndex + 1];
+    // A short stack would sit in a tall, mostly empty side card, so those
+    // projects give the media the full width and list role and stack below.
+    const compact = (project?.details?.techStack.length ?? 0) <= COMPACT_STACK_MAX;
 
 
     if (!project) {
@@ -141,19 +155,26 @@ export default function ProjectView({ id }: { id: string }) {
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         // A clip keeps its own 16:10 frame so nothing is
                         // cropped; a still image fills the fixed height.
-                        className={`lg:col-span-2 relative rounded-xl overflow-hidden group ${
+                        className={`${compact ? "lg:col-span-3" : "lg:col-span-2"} relative rounded-xl overflow-hidden group ${
                             project.video ? "aspect-[16/10]" : "h-100 lg:h-125"
                         }`}
                     >
-                        <ProjectMedia
-                            imageUrl={project.imageUrl}
-                            video={project.video}
-                            sizes="(min-width: 1024px) 66vw, 100vw"
-                            priority
-                            className="group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
+                        {project.video ? (
+                            <ProjectPlayer
+                                video={project.video}
+                                title={project.title}
+                            />
+                        ) : (
+                            <ProjectMedia
+                                imageUrl={project.imageUrl}
+                                sizes={compact ? "100vw" : "(min-width: 1024px) 66vw, 100vw"}
+                                priority
+                                className="group-hover:scale-105 transition-transform duration-700 ease-out"
+                            />
+                        )}
                     </motion.div>
 
+                    {!compact && (
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
@@ -214,7 +235,54 @@ export default function ProjectView({ id }: { id: string }) {
                             )}
                         </div>
                     </motion.div>
+                    )}
                 </div>
+
+                {compact && project.details && (
+                    <motion.section
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                        className="mt-16 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-x-12 gap-y-6"
+                    >
+                        {project.details.role && (
+                            <>
+                                <h2 className="md:col-span-4 md:text-right text-xl font-bold text-zinc-100">
+                                    Role
+                                </h2>
+                                <p className="md:col-span-8 text-lg text-zinc-300">
+                                    {project.details.role}
+                                </p>
+                            </>
+                        )}
+                        <h2 className="md:col-span-4 md:text-right text-xl font-bold text-zinc-100">
+                            Stack
+                        </h2>
+                        <ul className="md:col-span-8 flex flex-wrap gap-2">
+                            {project.details.techStack.map((tech) => (
+                                <li
+                                    key={tech.name}
+                                    className="stack-item flex items-center gap-2.5 rounded-lg border border-white/[0.08] bg-white/[0.02] px-3 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-800/30 cursor-default"
+                                >
+                                    <span className="relative flex h-5 w-5 shrink-0 items-center justify-center text-black">
+                                        {tech.url ? (
+                                            <Image
+                                                src={tech.url}
+                                                alt=""
+                                                fill
+                                                className="object-contain"
+                                            />
+                                        ) : (
+                                            <TechIcon icon={tech.icon} />
+                                        )}
+                                    </span>
+                                    {tech.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </motion.section>
+                )}
 
                 {project.playground === "mystic" && (
                     <motion.section
@@ -235,15 +303,70 @@ export default function ProjectView({ id }: { id: string }) {
                     </motion.section>
                 )}
 
-                {/* OVERVIEW SECTION */}
-                <motion.section
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="mt-24 max-w-5xl mx-auto"
-                >
+                {/* HIGHLIGHTS */}
+                {project.details?.highlights && (
+                    <motion.section
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                        className="mt-24 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12"
+                    >
+                        <h2 className="md:col-span-4 md:text-right text-xl font-bold text-zinc-100">
+                            Highlights
+                        </h2>
+                        <ul className="md:col-span-8 border-b border-zinc-800">
+                            {project.details.highlights.map((line) => (
+                                <li
+                                    key={line}
+                                    className="border-t border-zinc-800 py-4 text-lg leading-snug text-zinc-300"
+                                >
+                                    {line}
+                                </li>
+                            ))}
+                        </ul>
+                    </motion.section>
+                )}
 
-                    <div className="space-y-16">
+                {/* FULL WRITE-UP: collapsed behind a toggle when highlights exist */}
+                <section className="mt-10 max-w-5xl mx-auto">
+                    {project.details?.highlights && (
+                        <div className="md:grid md:grid-cols-12 md:gap-12">
+                            <button
+                                type="button"
+                                onClick={() => setWriteUpOpen((v) => !v)}
+                                aria-expanded={writeUpOpen}
+                                aria-controls="write-up"
+                                className="group md:col-start-5 md:col-span-8 inline-flex items-center gap-2 text-sm text-zinc-400 underline underline-offset-4 transition-colors hover:text-white active:scale-[0.97] transition-transform"
+                            >
+                                {writeUpOpen ? "Hide write-up" : "Read the full write-up"}
+                                <CaretDown
+                                    size={14}
+                                    weight="bold"
+                                    aria-hidden
+                                    className={`transition-transform duration-300 ease-out ${
+                                        writeUpOpen ? "rotate-180" : ""
+                                    }`}
+                                />
+                            </button>
+                        </div>
+                    )}
+
+                    <AnimatePresence initial={false}>
+                        {(writeUpOpen || !project.details?.highlights) && (
+                            <motion.div
+                                id="write-up"
+                                key="write-up"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{
+                                    duration: 0.5,
+                                    ease: [0.16, 1, 0.3, 1],
+                                }}
+                                className="overflow-hidden"
+                            >
+                    <div className="space-y-16 pt-16">
                         {project.details?.detailedDescription &&
                             project.details.detailedDescription
                                 .split("## ")
@@ -288,7 +411,10 @@ export default function ProjectView({ id }: { id: string }) {
                                     );
                                 })}
                     </div>
-                </motion.section>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </section>
 
                 {/* --- PROJECT NAVIGATION --- */}
                 <section className="mt-32 pt-12 border-t border-zinc-800/50">

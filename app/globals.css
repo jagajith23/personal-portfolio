@@ -696,3 +696,60 @@ body {
     height: 2px;
   }
 }
+
+/* Project demo player. Colours live here rather than in utilities so the
+   brutalist overrides below always win. */
+.player-bar {
+  background: rgb(0 0 0 / 0.72);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #f4f4f5;
+}
+.player-track {
+  background: rgb(0 0 0 / 0.45);
+}
+.player-fill {
+  background: var(--color-signature);
+}
+/* The native range is the (invisible) input layer: it owns pointer, touch and
+   keyboard seeking, while the track and fill above it are drawn by hand so the
+   bar can sit flush on the video's bottom edge. */
+.player-range {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+[data-design="brutal"] .player-bar {
+  background: var(--bru-paper);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  color: var(--bru-ink);
+  border: 2px solid var(--bru-ink);
+  box-shadow: 3px 3px 0 var(--bru-shadow);
+}
+[data-design="brutal"] .player-btn:hover {
+  background-color: var(--bru-accent);
+}
+[data-design="brutal"] .player-track {
+  background: var(--bru-ink);
+}
+[data-design="brutal"] .player-fill {
+  background: var(--bru-accent);
+}
+
+/* Theme switch: the new page is revealed by a clip-path circle (see
+   design-provider.tsx), so turn off the default crossfade and stack the
+   snapshots instead. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}

@@ -30,13 +30,12 @@ export const metadata: Metadata = {
         siteName: SITE_NAME,
         title: SITE_TITLE,
         description: SITE_DESCRIPTION,
-        images: [{ url: "/me-cropped.jpg", alt: "Portrait of Jagajith" }],
     },
+    // The card image comes from app/opengraph-image.tsx and twitter-image.tsx.
     twitter: {
-        card: "summary",
+        card: "summary_large_image",
         title: SITE_TITLE,
         description: SITE_DESCRIPTION,
-        images: ["/me-cropped.jpg"],
     },
     manifest: "/favicon_io/site.webmanifest",
     icons: {

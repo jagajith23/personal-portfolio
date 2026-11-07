@@ -1,40 +1,26 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SectionHeading from "./section-heading";
 
 const MEMES = [
-    "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExam92YXc3ejBoenkxeTdveDJ5NnNyZDZud2NwMzh0YzRicnVrbXVxNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/LdrZAPftAWx4HY0Rma/200.webp",
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3V1OWw2eXl3bnR4a2t5cWF4Z2Z4a2t5cWF4Z2Z4a2t5cWF4Z2Z4a2t5cWF4ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LdOyjZ7io5Msw/giphy.gif",
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGZ4a2t5cWF4Z2Z4a2t5cWF4Z2Z4a2t5cWF4Z2Z4a2t5cWF4Z2Z4ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13CoXDiaCcCoyk/giphy.gif",
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGZ4a2t5cWF4Z2Z4a2t5cWF4Z2Z4a2t5cWF4Z2Z4a2t5cWF4Z2Z4ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QMHoU66sBXqqLqYvGO/giphy.gif",
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGZ4a2t5cWF4Z2Z4a2t5cWF4Z2Z4a2t5cWF4Z2Z4a2t5cWF4Z2Z4ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KeepabbpXWzPq/giphy.gif",
-    "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDl2dTVmOTNsNHhhMmw2MzNtdW50OXJiNm5zYjMzNTViMXRxbjdrMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/bhoRGJHLkcNUz7aKSn/200w.webp",
-    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDl2dTVmOTNsNHhhMmw2MzNtdW50OXJiNm5zYjMzNTViMXRxbjdrMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/s5wFafpHxqKbIEERl9/200.webp",
-    "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzBxa2wyandha2pmY25kNnQ0eGxzZGRyd3dsd3p3MXpic2d2a3duZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/bOIezML3PZwsHaDjcf/200.webp",
-    "https://media2.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ODFqenY0OTA0anQwM2w4d3Njemw3cHg4a2V0MThpbm1xNDN5b2FkMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/8qCPBhbVs7jtufZB1J/giphy.webp",
-    "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3dmaHdzY3R0NzJldzN1ZXZxbDA5amdpeG9vZHo0cDBnN3FkamJzbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/cvKiHnCupBCS9mq9go/200.webp",
-    "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnA5ZGRzaTQ0ODdmcGVwdmQzN3prMW1tZjNnMng4ZG10ODdhMW1qdiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xBI67bRulv8pxZpYaZ/giphy.webp",
-    "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3dmaHdzY3R0NzJldzN1ZXZxbDA5amdpeG9vZHo0cDBnN3FkamJzbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/2fRdDrRR4bSS9KE70R/giphy.webp",
-    "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGpzOTdkYWMwaG41bmVnY2pscXZiYzJ2MjlseHR0YnUyNHZ3MzllYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gWXLu6Lv9YJJfOBjPr/200.webp",
-    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3d1djR5c3I5d3g5bHhseTIxMTdmcXBpZmJiYng4cnBvZnB1NXNhaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/XN8YOV0H6YfVFFGxth/200.webp",
-    "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGUzcXoxM2RxOTFnbWtobjd0YWYzczhpMWc1cTFkNDBlaDQ1cWoweiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/MKUOUJrFldIyi2hJyT/giphy.webp",
-    "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDhnMWlicWUwaWk5Y3N4eWJieDNoN2w2MGp1bjdkdnBteG9iMGgyMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/n5iPVLeA1fvb0IYU5W/200.webp",
-    "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmhkcGt5dHV5MGZ1YXo5cnZtcWc2N2VrejU3bzVwZ3I0azZqejF2MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ywGp4PMJdeLyuRq7vJ/giphy.webp",
-    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmhkcGt5dHV5MGZ1YXo5cnZtcWc2N2VrejU3bzVwZ3I0azZqejF2MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/G0gQWdeRxefSJgBalK/giphy.webp",
-    "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnJkbG93dDE0aWRtYTV0bm5hZXkyOHN3bXhpdmIwNG4ydzE1YjJ6cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/12s2PXFPfJXUcHHjWR/200.webp",
-    "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXN0YXJ4aXZvdnNvd3F3NmRwY2Q4NndsdjNlcGFlZjJ3N2pjanJieCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/kYFluNGNP7bMN0WTEH/giphy.webp",
-    "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnJkbG93dDE0aWRtYTV0bm5hZXkyOHN3bXhpdmIwNG4ydzE1YjJ6cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/8BvDeob89F69frIy1j/giphy.webp",
-    "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGoxNHF4djFiM2N0Ym96aHduNWxzanlwemNyNTE3ajhmbjljcnN0dyZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/GCO5WNzFmlc0vjK8cA/giphy.webp",
-    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3d1djR5c3I5d3g5bHhseTIxMTdmcXBpZmJiYng4cnBvZnB1NXNhaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/cbDSTyWpoUWzyolJL9/200.webp",
-    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGUzcXoxM2RxOTFnbWtobjd0YWYzczhpMWc1cTFkNDBlaDQ1cWoweiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/XMMUWcz4XtDTNgZj22/200.webp",
-    "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3d1djR5c3I5d3g5bHhseTIxMTdmcXBpZmJiYng4cnBvZnB1NXNhaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xdBCeanNvjJZsSpAIR/giphy.webp",
-    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGpzOTdkYWMwaG41bmVnY2pscXZiYzJ2MjlseHR0YnUyNHZ3MzllYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/In0Lpu4FVivjISX9HT/giphy.gif",
-    "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExenF4bG5rZmdkZ2RhdWxueG05enVsd3l2c2tjbTdxMXh4bWE4Mnl2MiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/meJN6qdG74lUKAJTQl/giphy.webp",
-    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3dmaHdzY3R0NzJldzN1ZXZxbDA5amdpeG9vZHo0cDBnN3FkamJzbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/J6mgm2K7HozKSuE1wH/200.webp",
-    "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3dmaHdzY3R0NzJldzN1ZXZxbDA5amdpeG9vZHo0cDBnN3FkamJzbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/julC6kCaZ4Jpspvdw5/giphy.webp",
-    "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGt0a2JibjZjZXR4YXlrZ2MyeDhwZHhpYWs2aDQxMjFjY3YxNWV3MyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/o0hfuAuQHYDhd0ujh8/giphy.webp",
+    "/memes/meme-01.webp",
+    "/memes/meme-06.webp",
+    "/memes/meme-07.webp",
+    "/memes/meme-08.webp",
+    "/memes/meme-10.webp",
+    "/memes/meme-13.webp",
+    "/memes/meme-14.webp",
+    "/memes/meme-15.webp",
+    "/memes/meme-16.webp",
+    "/memes/meme-17.webp",
+    "/memes/meme-18.webp",
+    "/memes/meme-19.webp",
+    "/memes/meme-24.webp",
+    "/memes/meme-28.webp",
+    "/memes/meme-29.webp",
+    "/memes/meme-30.webp",
 ];
 
 interface TrailItem {
@@ -50,23 +36,50 @@ export default function MemeTrail() {
     const lastPos = useRef({ x: 0, y: 0 });
     const trailIdCounter = useRef(0);
 
-    const currentMemeIndex = useRef(Math.floor(Math.random() * MEMES.length));
+    const currentMemeIndex = useRef(0);
+    const sectionRef = useRef<HTMLElement>(null);
     const SPAWN_THRESHOLD = 150;
     const MAX_ITEMS = 15;
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const { clientX, clientY } = e;
+    const pointFrom = (e: React.PointerEvent<HTMLDivElement>) => {
         const { left, top } = e.currentTarget.getBoundingClientRect();
+        return { x: e.clientX - left, y: e.clientY - top };
+    };
 
-        const x = clientX - left;
-        const y = clientY - top;
+    // Warm the browser cache shortly before the section scrolls into view, so
+    // the first memes appear instantly instead of popping in mid-animation.
+    useEffect(() => {
+        // Random start so repeat visitors don't always see the same first meme.
+        currentMemeIndex.current = Math.floor(Math.random() * MEMES.length);
+        const el = sectionRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (!entry.isIntersecting) return;
+                for (const src of MEMES) new window.Image().src = src;
+                observer.disconnect();
+            },
+            { rootMargin: "800px 0px" },
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
 
+    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+        const { x, y } = pointFrom(e);
         const dist = Math.hypot(x - lastPos.current.x, y - lastPos.current.y);
 
         if (dist > SPAWN_THRESHOLD) {
             lastPos.current = { x, y };
             spawnItem(x, y);
         }
+    };
+
+    // Touch screens never "move" without scrolling, so a tap drops one too.
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+        const { x, y } = pointFrom(e);
+        lastPos.current = { x, y };
+        spawnItem(x, y);
     };
 
     const spawnItem = (x: number, y: number) => {
@@ -92,7 +105,7 @@ export default function MemeTrail() {
     };
 
     return (
-        <section id="after-hours" className="hidden md:block relative w-full bg-black py-16 md:py-24 overflow-hidden font-aoboshi">
+        <section ref={sectionRef} id="after-hours" className="hidden md:block relative w-full bg-black py-16 md:py-24 overflow-hidden font-aoboshi">
             <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12 relative z-10">
                 <SectionHeading
                     title="After Hours"
@@ -103,7 +116,8 @@ export default function MemeTrail() {
 
             {/* Interactive Area */}
             <div
-                onMouseMove={handleMouseMove}
+                onPointerMove={handlePointerMove}
+                onPointerDown={handlePointerDown}
                 className="
             relative 
             w-full 
