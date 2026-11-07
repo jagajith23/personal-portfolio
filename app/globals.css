@@ -575,6 +575,13 @@ body {
   translate: 4px 4px;
 }
 
+/* Project page stack chips: the translucent zinc hover tint reads as a dirty
+   grey on paper. Flood with the accent instead, like the nav buttons. */
+[data-design="brutal"] .stack-item:hover {
+  background-color: var(--bru-accent) !important;
+  color: var(--bru-ink) !important;
+}
+
 /* Tags, badges & nav pill → accent boxes */
 [data-design="brutal"] .rounded-full.bg-white\/\[0\.08\],
 [data-design="brutal"] .rounded-full.bg-white\/10 {
