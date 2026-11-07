@@ -54,7 +54,7 @@ export default function ProjectView({ id }: { id: string }) {
     return (
         <div className="min-h-[100dvh] bg-black text-white font-aoboshi selection:bg-zinc-800 selection:text-white overscroll-none">
             {/* NAV */}
-            <nav className="fixed top-0 left-0 w-full z-30 pointer-events-none">
+            <nav className="project-nav fixed top-0 left-0 w-full z-30 pointer-events-none">
                 <div className="max-w-7xl mx-auto px-6 md:px-12 py-6 flex justify-between">
                     <Link
                         href="/#projects"
@@ -63,7 +63,7 @@ export default function ProjectView({ id }: { id: string }) {
                         <motion.div
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors border border-zinc-800 rounded-full px-4 py-2 bg-black/60 backdrop-blur"
+                            className="project-nav-btn flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors border border-zinc-800 rounded-full px-4 py-2 bg-black/60 backdrop-blur"
                         >
                             <ArrowLeft size={14} weight="bold" aria-hidden />
                             Back
@@ -83,7 +83,7 @@ export default function ProjectView({ id }: { id: string }) {
                                 hover: { scale: 1.05 },
                                 tap: { scale: 0.95 },
                             }}
-                            className="pointer-events-auto flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors border border-zinc-800 rounded-full px-4 py-2 bg-black/60 backdrop-blur"
+                            className="project-nav-btn pointer-events-auto flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors border border-zinc-800 rounded-full px-4 py-2 bg-black/60 backdrop-blur"
                         >
                             Visit
                             <motion.span

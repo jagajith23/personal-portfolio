@@ -544,6 +544,37 @@ body {
   background: var(--bru-paper) !important;
 }
 
+/* Project page: the fixed <nav> is only a transparent, full-width positioning
+   wrapper for the Back / Visit buttons. The generic nav rules above would turn
+   it into a framed, shadowed slab across the whole viewport, so strip them and
+   let the buttons carry the brutal styling. */
+[data-design="brutal"] nav.project-nav {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+[data-design="brutal"] .project-nav-btn {
+  background: var(--bru-paper) !important;
+  backdrop-filter: none !important;
+  color: var(--bru-ink) !important;
+  border: 2px solid var(--bru-ink) !important;
+  box-shadow: 4px 4px 0 var(--bru-shadow) !important;
+  font-weight: 600;
+  transition:
+    background-color 150ms ease-out,
+    box-shadow 150ms ease-out,
+    translate 150ms ease-out;
+}
+[data-design="brutal"] .project-nav-btn:hover {
+  background: var(--bru-accent) !important;
+  box-shadow: 2px 2px 0 var(--bru-shadow) !important;
+  translate: 2px 2px;
+}
+[data-design="brutal"] .project-nav-btn:active {
+  box-shadow: 0 0 0 var(--bru-shadow) !important;
+  translate: 4px 4px;
+}
+
 /* Tags, badges & nav pill → accent boxes */
 [data-design="brutal"] .rounded-full.bg-white\/\[0\.08\],
 [data-design="brutal"] .rounded-full.bg-white\/10 {
