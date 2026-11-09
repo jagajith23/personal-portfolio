@@ -611,11 +611,21 @@ body {
   display: none !important;
 }
 
+/* Footer giant name: no synthetic bold (Aoboshi only ships regular). Safari's
+   fake bold leaves jagged overlaps on glyph terminals at this size. */
+.footer-watermark {
+  font-synthesis-weight: none;
+}
+
 /* Footer giant name, mix-blend-difference turns solid black on paper and
-   hides the copyright text on top. Make it a faint paper-tone watermark. */
+   hides the copyright text on top. Make it a faint paper-tone watermark.
+   The colour must be opaque: Aoboshi has no bold, so font-bold is synthesised,
+   and Safari fakes it by drawing the glyphs several times offset. A translucent
+   colour stacks up in the overlaps and shows as a ghosted, blurry edge. This is
+   6% ink over paper, flattened. */
 [data-design="brutal"] .footer-watermark {
   mix-blend-mode: normal !important;
-  color: rgba(10, 10, 10, 0.06) !important;
+  color: rgb(229, 227, 220) !important;
 }
 
 /* Career tags, flat paper chips with a thin ink outline. */
