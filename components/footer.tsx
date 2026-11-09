@@ -8,6 +8,15 @@ import Image from "next/image";
 import { ArrowUpRight, Copy } from "@phosphor-icons/react";
 import BadgeStack from "./leetcode-badge-stack";
 import MusicWidget from "./music-widget";
+import FooterDoodle from "./footer-doodle";
+
+const YEAR = new Date().getFullYear();
+// Stamped at build time (see next.config.ts), so it stays true without edits.
+const UPDATED = new Intl.DateTimeFormat("en", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+}).format(new Date(process.env.NEXT_PUBLIC_BUILT_AT ?? Date.now()));
 
 const SOCIALS = [
     {
@@ -67,7 +76,7 @@ export default function Footer() {
     return (
         <footer
             id="contact"
-            className="relative bg-black w-full pt-20 pb-10 font-aoboshi overflow-hidden"
+            className="relative bg-black w-full pt-20 pb-0 font-aoboshi overflow-hidden"
         >
             <div className="absolute top-0 left-0 w-full h-0.5 bg-linear-to-r from-transparent via-zinc-800 to-transparent" />
 
@@ -217,18 +226,23 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* --- SECTION 3: MASSIVE BRANDING --- */}
-                <div className="relative h-[15vh]">
-                    {/* The Huge Name - Visual Anchor */}
+                {/* --- SECTION 3: SIGN-OFF --- */}
+                {/* The name sits behind, the portrait rises in front of it and
+                    runs off the bottom of the page. */}
+                <div
+                    className="relative"
+                    style={{
+                        height: "calc(min(30rem, 78vw) * 0.8 + 3.5rem)",
+                    }}
+                >
                     <div
                         aria-hidden
                         className="
                 footer-watermark
                 absolute
-                left-1/2
-                -translate-x-1/2
-                -bottom-1/3
-                md:-bottom-6/10
+                inset-x-0
+                bottom-0
+                translate-y-[8%]
                 text-[15vw]
                 leading-[0.8]
                 font-bold
@@ -242,6 +256,13 @@ export default function Footer() {
                     >
                         JAGAJITH
                     </div>
+
+                    <div className="relative z-20 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 text-xs text-zinc-500">
+                        <span>©{YEAR} Jagajith B</span>
+                        <span>Built with Next.js · Updated {UPDATED}</span>
+                    </div>
+
+                    <FooterDoodle className="absolute bottom-0 left-1/2 z-10 w-[min(30rem,78vw)] h-[calc(min(30rem,78vw)*0.8)] -translate-x-1/2 text-zinc-500" />
                 </div>
             </div>
         </footer>

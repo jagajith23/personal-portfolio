@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  env: {
+    // Shown in the footer as "Updated <month year>".
+    NEXT_PUBLIC_BUILT_AT: new Date().toISOString(),
+  },
   async headers() {
     return [
       {
